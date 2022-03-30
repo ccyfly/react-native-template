@@ -1,0 +1,8 @@
+{
+  "app_name": "Example",
+  "version": "Version: {{version_name}} (Build {{build}})",
+  "button": {
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  }
+}

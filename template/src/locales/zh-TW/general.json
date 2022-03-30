@@ -1,0 +1,8 @@
+{
+  "app_name": "例子",
+  "version": "版本: {{version_name}} (Build {{build}})",
+  "button": {
+    "confirm": "確認",
+    "cancel": "取消"
+  }
+}

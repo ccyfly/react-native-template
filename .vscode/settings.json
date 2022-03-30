@@ -1,0 +1,15 @@
+{
+  "i18n-ally.localesPaths": [
+    "template/src/locales",
+    "template/ios/Pods/Flipper-Folly/folly/lang",
+    "template/ios/Pods/Flipper-Boost-iOSX/boost/locale",
+    "template/ios/Pods/boost/boost/locale",
+    "template/ios/Pods/RCT-Folly/folly/lang",
+    "template/ios/Pods/Flipper-Boost-iOSX/boost/predef/language",
+    "template/ios/Pods/boost/boost/predef/language",
+    "template/ios/Pods/Headers/Private/Flipper-Folly/folly/lang",
+    "template/ios/Pods/Headers/Private/RCT-Folly/folly/lang",
+    "template/ios/Pods/Headers/Public/Flipper-Folly/folly/lang",
+    "template/ios/Pods/Headers/Public/RCT-Folly/folly/lang"
+  ]
+}

@@ -1,0 +1,36 @@
+import React, { FunctionComponent } from 'react'
+// import Icon from 'react-native-vector-icons/MaterialIcons';
+import { TouchableOpacity } from 'react-native'
+
+import useTheme from '@/hooks/useTheme'
+import { Theme } from '@/theme/types'
+
+import { IconType, IconX } from '../Icons'
+
+
+interface IBackButtonProps {
+  onPress: () => void
+}
+const BackButton: FunctionComponent<IBackButtonProps> = ({ onPress }: IBackButtonProps) => {
+  const myOwnTheme: Theme = useTheme()
+  const { Colors, Gutters } = myOwnTheme
+  // console.log('colors', colors);
+  const { accent } = Colors
+
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[
+        Gutters.tinyPadding,
+        Gutters.smallLMargin,
+      ]}
+    >
+      <IconX
+        origin={IconType.MATERIAL_ICONS}
+        name={'arrow-back-ios'}
+        color={accent} size={24}
+      />
+    </TouchableOpacity>
+  )
+}
+export default BackButton
