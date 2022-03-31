@@ -4,6 +4,7 @@ import { Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import useTheme from '@/hooks/useTheme'
+import { IconType, IconX } from '@/components/basic/Icons'
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets()
@@ -27,6 +28,10 @@ const HomeScreen = () => {
       >
         {t('general:app_name')}
       </Text>
+      <IconX
+        origin={IconType.MATERIAL_COMMUNITY}
+        name='star'
+      />
     </View>
   )
 }
