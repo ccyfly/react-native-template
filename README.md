@@ -1,11 +1,11 @@
-[![Publish Package to npmjs](https://github.com/ccyfly/react-native-custom-template/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/ccyfly/react-native-custom-template/actions/workflows/npm-publish.yml)
+[![Publish Package to npmjs](https://github.com/ccyfly/react-native-template/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/ccyfly/react-native-template/actions/workflows/npm-publish.yml)
 
 # React-Native-Custom-Template
 
 ## Quick start
 To create a new project using the boilerplate simply run:
 ```
-npx react-native init MyApp --template react-native-custom-template
+npx react-native init MyApp --template @ccyfly/react-native-template
 ```
 ## Library included
 [@react-native-async-storage/async-storage](https://github.com/react-native-async-storage/async-storage)\
