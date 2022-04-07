@@ -4,7 +4,7 @@ import { ThemeLayout, ThemeVariables } from '@/theme/types'
 
 /**
  *
- * @param Theme can be spread like {Colors, NavigationColors, Gutters, Layout, Common, ...args}
+ * @param Theme can be spread like {Colors, Gutters, Layout, Common, ...args}
  * @return {*}
  */
 export default ({}: ThemeVariables): ThemeLayout => {
@@ -57,11 +57,17 @@ export default ({}: ThemeVariables): ThemeLayout => {
     alignItemsCenter: {
       alignItems: 'center',
     },
+    alignItemsEnd: {
+      alignItems: 'flex-end',
+    },
     alignItemsStart: {
       alignItems: 'flex-start',
     },
     alignItemsStretch: {
       alignItems: 'stretch',
+    },
+    justifyContentEnd: {
+      justifyContent: 'flex-end',
     },
     justifyContentCenter: {
       justifyContent: 'center',

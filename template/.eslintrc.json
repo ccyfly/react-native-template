@@ -48,7 +48,8 @@
     "eslint-plugin-prefer-arrow",
     "eslint-plugin-react",
     "@typescript-eslint",
-    "simple-import-sort"
+    "simple-import-sort",
+    "import-newlines"
   ],
   "rules": {
     "@typescript-eslint/array-type": [
@@ -409,12 +410,12 @@
         },
         "ObjectPattern": {
           "multiline": true,
-          "minProperties": 4,
+          "minProperties": 5,
           "consistent": false
         },
         "ImportDeclaration": {
           "multiline": true,
-          "minProperties": 4,
+          "minProperties": 5,
           "consistent": false
         },
         // "ImportDeclaration": "always",
@@ -438,6 +439,10 @@
     ],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
+    "import-newlines/enforce": [
+      "error",
+      4
+    ],
     "space-before-function-paren": [
       "error",
       {

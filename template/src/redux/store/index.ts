@@ -20,10 +20,8 @@ import {
 import immutableTransform from 'redux-persist-transform-immutable'
 import createSagaMiddleware from 'redux-saga'
 
-// import createSagaMiddleware from 'redux-saga'
 import rootReducer, { blacklist, middlewares } from '@/redux/reducers'
 import rootSaga from '@/redux/saga'
-// import { reduxStorage } from '@/services/Storage/MMKVStorage'
 
 const sagaMiddleware = createSagaMiddleware()
 

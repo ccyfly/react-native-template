@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react'
 import { TextStyle, ViewStyle } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -11,18 +12,19 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Octicons from 'react-native-vector-icons/Octicons'
 
-export enum IconType {
-  ICONICONS = 'ionicons',
-  ANT_ICON = 'ant',
-  EVIL_ICONS = 'EVIL',
-  FONT_AWESOME = 'FONTAWESOME',
-  FONT_AWESOME5 = 'fontawwesome5',
-  MATERIAL_ICONS = 'MaterialIcons',
-  FEATHER_ICONS = 'FEATHER',
-  ENTYPO = 'ENTYPO',
-  OCTICONS = 'OCTICONS',
-  MATERIAL_COMMUNITY = 'MATERIALCOMMUNITY',
+const IconType = {
+  ICONICONS: 'ionicons',
+  ANT_ICON: 'ant',
+  EVIL_ICONS: 'EVIL',
+  FONT_AWESOME: 'FONTAWESOME',
+  FONT_AWESOME5: 'fontawwesome5',
+  MATERIAL_ICONS: 'MaterialIcons',
+  FEATHER_ICONS: 'FEATHER',
+  ENTYPO: 'ENTYPO',
+  OCTICONS: 'OCTICONS',
+  MATERIAL_COMMUNITY: 'MATERIALCOMMUNITY',
 }
+export type IconType = typeof IconType[keyof typeof IconType]
 interface IProps {
   origin: IconType
   name: string
@@ -43,9 +45,12 @@ type IconXType = typeof AntDesign |
   typeof EvilIcons |
   typeof MaterialCommunityIcons
 
-export const IconX = ({
+type IPanel<P> = React.FunctionComponent<P> & typeof IconType
+
+const IconX: IPanel<IProps> = ({
   origin, name, color, size, paddingLeft, style,
 }: IProps) => {
+
   const colorx = color || '#aaaaaa'
   const sizex = size || 24
   const namex = name || 'right'
@@ -108,3 +113,16 @@ export const IconX = ({
     />
   )
 }
+IconX.ANT_ICON = IconType.ANT_ICON
+IconX.ENTYPO = IconType.ENTYPO
+IconX.EVIL_ICONS = IconType.EVIL_ICONS
+IconX.FEATHER_ICONS = IconType.FEATHER_ICONS
+IconX.FONT_AWESOME = IconType.FONT_AWESOME
+IconX.FONT_AWESOME5 = IconType.FONT_AWESOME5
+IconX.ICONICONS = IconType.ICONICONS
+IconX.MATERIAL_COMMUNITY = IconType.MATERIAL_COMMUNITY
+IconX.MATERIAL_ICONS = IconType.MATERIAL_ICONS
+IconX.OCTICONS = IconType.OCTICONS
+
+// export default Object.assign(IconX, IconType)
+export default IconX

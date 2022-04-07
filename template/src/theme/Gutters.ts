@@ -6,7 +6,7 @@ import { ThemeGutters, ThemeVariables } from '@/theme/types'
  * Generate Styles depending on MetricsSizes vars availabled at ./Theme/Variables
  * Styles are like :
  * <size><direction><op>: {
- *    <op><direction>: <value>
+ * <op><direction>: <value>
  * }
  * where:
  * <size>: is the key of the variable included in MetricsSizes

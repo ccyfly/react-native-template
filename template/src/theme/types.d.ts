@@ -27,12 +27,17 @@ declare module '@/theme/types' {
   type NavigationColors = PaperThemeType['colors']
   type OwnColor = {
     secondary: string
-    onPrimary: string
     onSecondary: string
+    onPrimary: string
     onBackground: string
+    onError: string
+    tertiary: string
+    onTertiary: string
+    surfaceVariant: string
+    onSurfaceVariant: string
+
     transparent: string
     inputBackground: string
-    buttonText: string
     statusBarBackgroundColor: string
     topBarBackgroundColor: string
     bottomTabActiveTextColor: string
@@ -40,10 +45,6 @@ declare module '@/theme/types' {
     homeBottomTabBackgroundColor: string
     mapBottomTabBackgroundColor: string
     storeListBottomTabBackgroundColor: string
-    primaryButtonBg: string
-    primaryButtonText: string
-    secondaryButtonBg: string
-    secondaryButtonText: string
   }
   export type ThemeNavigationColors = PaperColors & NavigationColors & OwnColor
   export type ThemeFontSize = { [key: string]: number }

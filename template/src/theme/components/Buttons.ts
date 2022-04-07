@@ -5,14 +5,14 @@ import { IThemeCommonParams } from '@/theme/types'
 export default ({ Colors: colors, Gutters: gutters, Layout: layout }: IThemeCommonParams) => {
   const base = {
     ...layout.center,
-    ...gutters.largeHPadding,
+    ...gutters.regularHPadding,
     height: 40,
     backgroundColor: colors.primary,
     borderRadius: 2,
   }
   const rounded = {
     ...base,
-    borderRadius: 16,
+    borderRadius: 12,
   }
   const outline = {
     ...base,

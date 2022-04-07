@@ -2,7 +2,7 @@ import { ThemeImages, ThemeVariables } from '@/theme/types'
 
 /**
  *
- * @param Theme can be spread like {Colors, NavigationColors, Gutters, Layout, Common, ...args}
+ * @param Theme can be spread like {Colors, Gutters, Layout, Common, ...args}
  * @return {*}
  */
 export default ({}: ThemeVariables): ThemeImages => {

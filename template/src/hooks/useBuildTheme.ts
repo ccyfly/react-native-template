@@ -35,8 +35,8 @@ export default () => {
   const isDark = useSelector(
     (state: { theme: ThemeState }) => state.theme.darkMode,
   )
-  const lang = useSelector(selectLocale)
   const darkMode = isDark === null ? colorScheme === 'dark' : isDark
+  // const lang = useSelector(selectLocale)
   // const darkMode = false
   // let fontFamily = 'NotoSansTC-Regular'
   // switch (lang) {

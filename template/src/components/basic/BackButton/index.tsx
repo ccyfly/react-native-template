@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native'
 import useTheme from '@/hooks/useTheme'
 import { Theme } from '@/theme/types'
 
-import { IconType, IconX } from '../Icons'
+import IconX from '../Icons'
 
 
 interface IBackButtonProps {
@@ -26,7 +26,7 @@ const BackButton: FunctionComponent<IBackButtonProps> = ({ onPress }: IBackButto
       ]}
     >
       <IconX
-        origin={IconType.MATERIAL_ICONS}
+        origin={IconX.MATERIAL_ICONS}
         name={'arrow-back-ios'}
         color={accent} size={24}
       />

@@ -10,7 +10,7 @@ import { IThemeCommonParams } from '@/theme/types'
 import buttonStyles from './components/Buttons'
 /**
  *
- * @param Theme can be spread like {Colors, NavigationColors, Gutters, Layout, Common, ...args}
+ * @param Theme can be spread like {Colors, Gutters, Layout, Common, ...args}
  * @return {*}
  */
 export default  ({ Colors: colors, ...args }: IThemeCommonParams) => {

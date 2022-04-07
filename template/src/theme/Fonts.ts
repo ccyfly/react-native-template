@@ -2,17 +2,17 @@
  * This file contains all application's style relative to fonts
  */
 import { StyleSheet } from 'react-native'
+import { material } from 'react-native-typography'
 
-// import { material } from 'react-native-typography'
 import { ThemeFonts, ThemeVariables } from '@/theme/types'
 
-// const titleFontStyle = material.titleObject
-// const bodyFontStyle = material.body1Object
-// const buttonFontStyle = material.buttonObject
+const titleFontStyle = material.titleObject
+const bodyFontStyle = material.body1Object
+const buttonFontStyle = material.buttonObject
 
 /**
  *
- * @param Theme can be spread like {Colors, NavigationColors, Gutters, Layout, Common, ...args}
+ * @param Theme can be spread like {Colors, Gutters, Layout, Common, ...args}
  * @return {*}
  */
 export default  ({ FontSize: fontSize, Colors: colors }: ThemeVariables): ThemeFonts => {
@@ -23,7 +23,7 @@ export default  ({ FontSize: fontSize, Colors: colors }: ThemeVariables): ThemeF
     },
     buttonTextSmall: {
       fontSize: fontSize.small,
-      color: colors.buttonText,
+      color: colors.text,
     },
     textRegular: {
       fontSize: fontSize.regular,
@@ -31,11 +31,11 @@ export default  ({ FontSize: fontSize, Colors: colors }: ThemeVariables): ThemeF
     },
     primaryButtonTextRegular: {
       fontSize: fontSize.regular,
-      color: colors.primaryButtonText,
+      color: colors.onPrimary,
     },
     secondaryButtonTextRegular: {
       fontSize: fontSize.regular,
-      color: colors.secondaryButtonText,
+      color: colors.onSecondary,
     },
     textLarge: {
       fontSize: fontSize.large,
@@ -43,7 +43,11 @@ export default  ({ FontSize: fontSize, Colors: colors }: ThemeVariables): ThemeF
     },
     buttonTextLarge: {
       fontSize: fontSize.large,
-      color: colors.buttonText,
+      color: colors.text,
+    },
+    textXlarge: {
+      fontSize: fontSize.xlarge,
+      color: colors.text,
     },
     titleSmall: {
       fontSize: fontSize.small * 2,
@@ -75,8 +79,8 @@ export default  ({ FontSize: fontSize, Colors: colors }: ThemeVariables): ThemeF
   })
 
   return Object.assign(styles, {
-    // bodyFontStyle,
-    // buttonFontStyle,
-    // titleFontStyle,
+    bodyFontStyle,
+    buttonFontStyle,
+    titleFontStyle,
   })
 }
