@@ -42,9 +42,6 @@ declare module '@/theme/types' {
     topBarBackgroundColor: string
     bottomTabActiveTextColor: string
     bottomTabInactiveTextColor: string
-    homeBottomTabBackgroundColor: string
-    mapBottomTabBackgroundColor: string
-    storeListBottomTabBackgroundColor: string
   }
   export type ThemeNavigationColors = PaperColors & NavigationColors & OwnColor
   export type ThemeFontSize = { [key: string]: number }

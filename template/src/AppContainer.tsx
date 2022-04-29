@@ -23,7 +23,7 @@ import useBuildTheme from './hooks/useBuildTheme'
 const AppContainer = (): React.ReactElement => {
   const dispatch = useDispatch()
   const theme = useBuildTheme()
-  const { NavigationTheme, MetricsSizes } = theme
+  const { NavigationTheme, MetricsSizes, Colors } = theme
   const initiated = useSelector(selectInitiated)
   const lang = useSelector(selectLocale)
 
@@ -94,7 +94,7 @@ const AppContainer = (): React.ReactElement => {
         <EmotionThemeProvider theme={emotionTheme}>
           <PaperProvider theme={NavigationTheme}>
             {true ? <AppNavigationContainer theme={NavigationTheme} /> : <></>}
-            <LoadingOverlay />
+            <LoadingOverlay indicatorColor={Colors.primary}/>
           </PaperProvider>
         </EmotionThemeProvider>
       </RootSiblingParent>

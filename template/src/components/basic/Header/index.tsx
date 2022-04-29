@@ -1,10 +1,11 @@
 import { StackHeaderProps } from '@react-navigation/stack'
 import React, { useCallback } from 'react'
-import { Animated } from 'react-native'
+import { Animated, View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import useTheme from '@/hooks/useTheme'
+import { Theme } from '@/theme/types'
 
 import BackButton from '../BackButton'
 
@@ -13,16 +14,18 @@ import BackButton from '../BackButton'
 const HEADER_HEIGHT = 48
 export type HeaderProps = StackHeaderProps & Partial<{
   backgroundColor: string
+  onBackPress: () => boolean
 }>
-const Header = ({
+const Header: React.FC<HeaderProps> = ({
   back,
-  progress,
-  options,
-  route,
-  navigation,
   backgroundColor,
+  navigation,
+  onBackPress,
+  options,
+  progress,
+  route,
 }: HeaderProps) => {
-  const { Colors } = useTheme()
+  const { Colors, Gutters } = useTheme()
   const inset = useSafeAreaInsets()
 
   const { headerMode, presentation } = options
@@ -60,6 +63,8 @@ const Header = ({
     []
   )
 
+  const { headerLeft, headerRight } = options
+
   return (
     <Animated.View style={{
       opacity,
@@ -77,7 +82,20 @@ const Header = ({
           height: HEADER_HEIGHT + (presentation === 'card' ? inset.top : 0),
         }}
       >
-        {back ? <BackButton onPress={goBack} /> : null}
+        {back || headerLeft ?
+          <View
+            style={[
+              Gutters.smallPadding,
+              // Gutters.smallLMargin,
+              {
+                flex: 1,
+                flexDirection: 'row',
+              },
+            ]}
+          >
+            {headerLeft ? headerLeft({}) : <BackButton onPress={goBack} />}
+          </View> : null
+        }
         <Appbar.Content
           title={title}
           style={{
@@ -103,33 +121,22 @@ const Header = ({
           }}
           pointerEvents="box-none"
         />
-        {/* <View
-          style={{
-            // backgroundColor: 'red',
-            position: 'absolute',
-            flexDirection: 'row',
-            alignItems: 'center',
-            alignContent: 'center',
-            justifyContent: 'center',
-            left: 0,
-            bottom: 0,
-            // padding: 0,
-            // margin: 0,
-            flex: 1,
-            width: '100%',
-            height: 56,
-            // paddingTop: inset.top,
-            alignSelf: 'center',
-          }}
-        >
-          <Text
-            style={{
-              textAlign: 'center',
-            }}
+        {headerRight ? (
+          <View
+            style={[
+              Gutters.smallPadding,
+              // Gutters.smallRMargin,
+              {
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+              },
+
+            ]}
           >
-            {title}
-          </Text>
-        </View> */}
+            {headerRight({})}
+          </View>
+        ) : null}
       </Appbar>
     </Animated.View>
   )

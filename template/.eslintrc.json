@@ -49,7 +49,9 @@
     "eslint-plugin-react",
     "@typescript-eslint",
     "simple-import-sort",
-    "import-newlines"
+    "import-newlines",
+    "newline-destructuring",
+    "sort-destructure-keys"
   ],
   "rules": {
     "@typescript-eslint/array-type": [
@@ -442,6 +444,18 @@
     "import-newlines/enforce": [
       "error",
       4
+    ],
+    "newline-destructuring/newline": [
+      "error",
+      {
+        "items": 3
+      }
+    ],
+    "sort-destructure-keys/sort-destructure-keys": [
+      "error",
+      {
+        "caseSensitive": false
+      }
     ],
     "space-before-function-paren": [
       "error",

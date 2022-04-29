@@ -7,7 +7,6 @@ import { Theme } from '@/theme/types'
 
 import IconX from '../Icons'
 
-
 interface IBackButtonProps {
   onPress: () => void
 }
@@ -15,20 +14,16 @@ const BackButton: FunctionComponent<IBackButtonProps> = ({ onPress }: IBackButto
   const myOwnTheme: Theme = useTheme()
   const { Colors, Gutters } = myOwnTheme
   // console.log('colors', colors);
-  const { accent } = Colors
+  const { accent, onPrimary } = Colors
 
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[
-        Gutters.tinyPadding,
-        Gutters.smallLMargin,
-      ]}
     >
       <IconX
         origin={IconX.MATERIAL_ICONS}
         name={'arrow-back-ios'}
-        color={accent} size={24}
+        color={onPrimary} size={24}
       />
     </TouchableOpacity>
   )

@@ -152,7 +152,6 @@ const buildTheme = (
   themeConfig: Partial<Theme>,
   darkThemeConfig: Partial<Theme>,
 ) => {
-  console.log('build Theme')
 
   return {
     ...mergeTheme(baseTheme, themeConfig, darkThemeConfig),

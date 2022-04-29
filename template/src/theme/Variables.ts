@@ -32,9 +32,6 @@ const ownColor: OwnColor =  {
   // Bottom Tab
   bottomTabActiveTextColor: '#f0edf6',
   bottomTabInactiveTextColor: '#A8A8A8',
-  homeBottomTabBackgroundColor: '#1565c0',
-  mapBottomTabBackgroundColor: '#009688',
-  storeListBottomTabBackgroundColor: '#607D8B',
 }
 
 /**

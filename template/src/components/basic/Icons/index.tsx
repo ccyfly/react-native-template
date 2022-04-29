@@ -48,7 +48,12 @@ type IconXType = typeof AntDesign |
 type IPanel<P> = React.FunctionComponent<P> & typeof IconType
 
 const IconX: IPanel<IProps> = ({
-  origin, name, color, size, paddingLeft, style,
+  color,
+  name,
+  origin,
+  paddingLeft,
+  size,
+  style,
 }: IProps) => {
 
   const colorx = color || '#aaaaaa'
