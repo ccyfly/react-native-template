@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  ActivityIndicator,
-  ColorValue,
-  View,
-} from 'react-native'
+import { ActivityIndicator, ColorValue, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { useSelector } from 'react-redux'
 
@@ -19,7 +15,7 @@ interface ILoadingOverlayProps {
   wording?: string
 }
 
-const LoadingOverlay = ({
+const LoadingOverlay: React.FC<ILoadingOverlayProps> = ({
   backgroundColor = 'rgba(0,0,0,0.5)',
   indicatorColor = 'red',
   opacity = 0.5,

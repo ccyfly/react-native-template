@@ -137,6 +137,33 @@ const Header: React.FC<HeaderProps> = ({
             {headerRight({})}
           </View>
         ) : null}
+        {/* <View
+          style={{
+            // backgroundColor: 'red',
+            position: 'absolute',
+            flexDirection: 'row',
+            alignItems: 'center',
+            alignContent: 'center',
+            justifyContent: 'center',
+            left: 0,
+            bottom: 0,
+            // padding: 0,
+            // margin: 0,
+            flex: 1,
+            width: '100%',
+            height: 56,
+            // paddingTop: inset.top,
+            alignSelf: 'center',
+          }}
+        >
+          <Text
+            style={{
+              textAlign: 'center',
+            }}
+          >
+            {title}
+          </Text>
+        </View> */}
       </Appbar>
     </Animated.View>
   )

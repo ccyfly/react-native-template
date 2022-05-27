@@ -1,4 +1,4 @@
-import logger from '../common/logger'
+import * as logger from '../common/logger'
 import Timeout from '../common/Timeout'
 import AbstractClient from './AbstractClient'
 import APIResponse from './ApiResponse'

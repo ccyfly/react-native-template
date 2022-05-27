@@ -45,7 +45,5 @@ export const nonPersistSlice = createSlice({
   },
 })
 
-export const {
-  showLoading, hideLoading, hideAllLoading, setInitiated,
-} = nonPersistSlice.actions
+export const { showLoading, hideLoading, hideAllLoading, setInitiated } = nonPersistSlice.actions
 export default nonPersistSlice.reducer

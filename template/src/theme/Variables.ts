@@ -25,6 +25,7 @@ const ownColor: OwnColor =  {
   transparent: 'rgba(0,0,0,0)',
   surfaceVariant: '#E7E0EC',
   onSurfaceVariant: '#49454F',
+  buttonText: '#FFFFFF',
 
   inputBackground: '#FFFFFF',
   statusBarBackgroundColor: 'rgba(48,63,159, 0.7)',
@@ -32,6 +33,9 @@ const ownColor: OwnColor =  {
   // Bottom Tab
   bottomTabActiveTextColor: '#f0edf6',
   bottomTabInactiveTextColor: '#A8A8A8',
+  homeBottomTabBackgroundColor: '#1565c0',
+  mapBottomTabBackgroundColor: '#009688',
+  storeListBottomTabBackgroundColor: '#607D8B',
 }
 
 /**
@@ -40,7 +44,7 @@ const ownColor: OwnColor =  {
 export const Colors: Partial<ThemeNavigationColors> = Object.assign(
   {
     primary: '#1565c0',
-    background: '#FFFBFE',
+    background: '#FFFFFF',
     surface: '#FFFBFE',
     onSurface: '#1C1B1F',
     accent: ownColor.secondary,

@@ -24,7 +24,7 @@ const IconType = {
   OCTICONS: 'OCTICONS',
   MATERIAL_COMMUNITY: 'MATERIALCOMMUNITY',
 }
-export type IconType = typeof IconType[keyof typeof IconType]
+type IconType = typeof IconType[keyof typeof IconType]
 interface IProps {
   origin: IconType
   name: string

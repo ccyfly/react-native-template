@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import LoadingOverlay from '@/components/basic/LoadingOverlay'
 import { Locale } from '@/configs/constants/type'
+import { ThemeContext } from '@/contexts/ThemeContext'
+import useBuildTheme from '@/hooks/useBuildTheme'
 import i18n from '@/locales/i18n'
 import AppNavigationContainer from '@/navigators'
 import { setInitiated } from '@/redux/reducers/nonPersistSlice'
@@ -17,13 +19,10 @@ import { setLocale } from '@/redux/reducers/settingSlice'
 import { selectInitiated } from '@/redux/selectors/nonPersist'
 import { selectLocale } from '@/redux/selectors/setting'
 
-import { ThemeContext } from './contexts/ThemeContext'
-import useBuildTheme from './hooks/useBuildTheme'
-
 const AppContainer = (): React.ReactElement => {
   const dispatch = useDispatch()
   const theme = useBuildTheme()
-  const { NavigationTheme, MetricsSizes, Colors } = theme
+  const { Colors, MetricsSizes, NavigationTheme } = theme
   const initiated = useSelector(selectInitiated)
   const lang = useSelector(selectLocale)
 
@@ -39,6 +38,7 @@ const AppContainer = (): React.ReactElement => {
     const deviceLocale = preferredLocale.languageTag
     console.log('deviceLocale: ' + deviceLocale)
 
+    // Set app locale as device's locale
     if (lang === null) {
       setupLocale(deviceLocale)
     } else {
@@ -90,14 +90,14 @@ const AppContainer = (): React.ReactElement => {
 
   return (
     <ThemeContext.Provider value={theme}>
-      <RootSiblingParent>
-        <EmotionThemeProvider theme={emotionTheme}>
-          <PaperProvider theme={NavigationTheme}>
+      <EmotionThemeProvider theme={emotionTheme}>
+        <PaperProvider theme={NavigationTheme}>
+          <RootSiblingParent>
             {true ? <AppNavigationContainer theme={NavigationTheme} /> : <></>}
             <LoadingOverlay indicatorColor={Colors.primary}/>
-          </PaperProvider>
-        </EmotionThemeProvider>
-      </RootSiblingParent>
+          </RootSiblingParent>
+        </PaperProvider>
+      </EmotionThemeProvider>
     </ThemeContext.Provider>
   )
 }

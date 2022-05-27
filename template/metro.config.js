@@ -4,7 +4,7 @@
  *
  * @format
  */
- const { getDefaultConfig } = require("metro-config");
+const { getDefaultConfig } = require("metro-config");
 const path = require('path')
 const extraNodeModules = {
   '@/': path.resolve(__dirname + '/src'),
@@ -12,7 +12,6 @@ const extraNodeModules = {
 const watchFolders = [
   path.resolve(__dirname + '/src'),
 ]
-
 module.exports = (async () => {
   const {
     resolver: { sourceExts, assetExts }
@@ -39,6 +38,7 @@ module.exports = (async () => {
     },
   }
 })();
+
 // module.exports = {
 //   transformer: {
 //     getTransformOptions: async () => ({
@@ -48,4 +48,4 @@ module.exports = (async () => {
 //       },
 //     }),
 //   },
-// }
+// };

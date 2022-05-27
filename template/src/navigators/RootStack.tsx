@@ -4,6 +4,7 @@ import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SafeAreaView, StatusBar, View } from 'react-native'
 
+import Header, { HeaderProps } from '@/components/basic/Header'
 import HomeScreen from '@/screens/Home'
 import SplashScreen from '@/screens/Splash'
 
@@ -13,6 +14,15 @@ const Stack = createStackNavigator<RootStackNavigationParamList>()
 
 const RootStack = (): React.ReactElement => {
   const { t } = useTranslation()
+
+  const renderHeader = (props: HeaderProps) => {
+    return (
+      <View>
+        {/* <StatusBar></StatusBar> */}
+        <Header {...props} />
+      </View>
+    )
+  }
 
   return (
     <Stack.Navigator
@@ -32,7 +42,10 @@ const RootStack = (): React.ReactElement => {
         component={HomeScreen}
         options={{
           presentation: 'card',
-          headerShown: false,
+          headerShown: true,
+          title: t('screens:home'),
+          headerBackTitleVisible: false,
+          header: renderHeader,
         }}
       />
     </Stack.Navigator>

@@ -17,7 +17,7 @@ npx react-native init MyApp --template @ccyfly/react-native-template
 [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler)\
 [react-native-screens](https://github.com/software-mansion/react-native-screens)\
 [react-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context)\
-[react-native-reanimated@2.5.0](https://github.com/software-mansion/react-native-reanimated)\
+[react-native-reanimated@2.8.0](https://github.com/software-mansion/react-native-reanimated)\
 [react-native-paper](https://callstack.github.io/react-native-paper/)\
 [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)\
 [react-native-svg](https://github.com/react-native-svg/react-native-svg)\

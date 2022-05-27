@@ -11,12 +11,6 @@ import { persistor, store } from '@/redux/store'
 import AppContainer from './AppContainer'
 import i18n from './locales/i18n'
 
-// if (__DEV__) {
-//   initializeMMKVFlipper({
-//     default: mmkvStorage,
-//   })
-// }
-
 const App = () => {
   useEffect(() => {
   }, [])

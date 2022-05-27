@@ -17,3 +17,13 @@ export const selectApiLocale = createSelector(
     return state.locale.replace('_', '-')
   }
 )
+
+export const selectAskedLocationPermission = createSelector(
+  selectState,
+  (state: SettingState) => state.askedLocationPermission
+)
+
+export const selectAskedLocationPermissionAfterBlocked = createSelector(
+  selectState,
+  (state: SettingState) => state.askedLocationPermissionAfterBlocked
+)

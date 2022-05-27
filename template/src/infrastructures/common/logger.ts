@@ -9,24 +9,24 @@ import { ITypedMap } from '@/models/index'
 
 import APIResponse from '../NetClient/ApiResponse'
 
-const info = (message: string): void => {
+export const info = (message: string): void => {
   console.log(clc.greenBright(message))
 }
 
-const warn = (message: string): void => {
+export const warn = (message: string): void => {
   console.log(clc.yellow(message))
 }
 
-const error = (message: string, errorObj?: Error): void => {
+export const error = (message: string, errorObj?: Error): void => {
   console.log(clc.red(message))
   if (errorObj) {
     console.log(errorObj)
   }
 }
 
-const request = (method: string, headerParams: Record<string, unknown>, url: string, formBody?: string): void => {
+export const request = (method: string, headerParams: Record<string, unknown>, url: string, formBody?: string): void => {
 
-  const bodyString = method !== 'GET' ? `${clc.greenBright('\nRequest [Body]')}${!formBody ? clc.greenBright('  <Empty>') : clc.greenBright(`\n${JSON.stringify(JSON.parse(formBody), '', 2)}`)}` : ''
+  const bodyString = method !== 'GET' ? `${clc.greenBright('\nRequest [Body]')}${!formBody ? clc.greenBright('  <Empty>') : clc.greenBright(`\n${JSON.stringify(JSON.parse(formBody), [''], 2)}`)}` : ''
   const requestSymbol = `${clc.greenBright('Request ==> ')}`
 
   console.log(`\n
@@ -38,7 +38,7 @@ ${clc.blackBright('\n===========================================================
 `)
 }
 
-const resp = (response: Response| AxiosResponse| ApiResponse<any>): void => {
+export const resp = (response: Response| AxiosResponse| ApiResponse<any>): void => {
   const responseSymbol = `${clc.greenBright('<== Response ')}`
 
   const url = response instanceof Response ? response.url : response.config?.url
@@ -53,7 +53,7 @@ ${clc.blackBright('=============================================================
 `)
 }
 
-const responseBody = (respBody: Record<string, unknown>): void => {
+export const responseBody = (respBody: Record<string, unknown>): void => {
   console.log(`\n
 ${clc.greenBright('Response [Body]:')}
 ${clc.greenBright(JSON.stringify(respBody, null, 2))} \n
@@ -61,7 +61,7 @@ ${clc.blackBright('=============================================================
 `)
 }
 
-const object = (message: string, obj: Record<string, unknown>): void => {
+export const object = (message: string, obj: Record<string, unknown>|ITypedMap<any>): void => {
   console.log(`\n
   ${clc.blackBright('=============================< ')}${message}${(clc.blackBright('>=================================\n'))}
 ${clc.greenBright(JSON.stringify(obj, null, 2))} \n
@@ -69,18 +69,6 @@ ${clc.blackBright('=============================================================
 `)
 }
 
-const log = (message?: any, ...para:any[]) => {
+export const log = (message?: any, ...para:any[]) => {
   console.log(`${clc.greenBright(message)}`, para)
 }
-
-const logger = {
-  info,
-  warn,
-  error,
-  request,
-  resp,
-  responseBody,
-  object,
-}
-
-export default logger

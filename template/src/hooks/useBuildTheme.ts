@@ -1,4 +1,5 @@
 import { DarkTheme, DefaultTheme } from '@react-navigation/native'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useColorScheme } from 'react-native'
 import { DarkTheme as PaperDarkTheme, DefaultTheme as PaperDefaultTheme } from 'react-native-paper'
 import { useSelector } from 'react-redux'
@@ -24,7 +25,52 @@ import {
   ThemeVariables,
 } from '@/theme/types'
 
+const buildDefaultTheme = (currentTheme: string, darkMode: boolean) => {
+  const {
+    Variables: themeConfigVars = {} as Partial<ThemeVariables>,
+    ...themeConfig
+  } = themes[currentTheme] || {}
+
+  const {
+    Variables: darkThemeConfigVars = {} as Partial<ThemeVariables>,
+    ...darkThemeConfig
+  } = darkMode ? themes[`${currentTheme}_dark`] || {} : {}
+
+  const themeVariables: ThemeVariables = mergeVariables(
+    DefaultVariables as ThemeVariables,
+    themeConfigVars,
+    darkThemeConfigVars,
+  )
+
+  // Build the default theme
+  const baseTheme: Theme = {
+    Fonts: Fonts(themeVariables),
+    Icons: Icons(themeVariables),
+    Gutters: Gutters(themeVariables),
+    Images: Images(themeVariables),
+    Layout: Layout(themeVariables),
+    Common: Common({
+      ...themeVariables,
+      Layout: Layout(themeVariables),
+      Gutters: Gutters(themeVariables),
+      Fonts: Fonts(themeVariables),
+      Images: Images(themeVariables),
+    }) as ThemeCommon,
+    ...themeVariables,
+    darkMode: !!darkMode,
+  }
+
+  return buildTheme(
+    !!darkMode,
+    baseTheme,
+    formatTheme(themeVariables, themeConfig || {}),
+    formatTheme(themeVariables, darkThemeConfig || {}),
+  )
+}
+
+/*
 export default () => {
+  console.log('useBuildTheme')
   // Get the scheme device
   const colorScheme = useColorScheme()
 
@@ -92,6 +138,72 @@ export default () => {
     formatTheme(themeVariables, darkThemeConfig || {}),
   )
 }
+*/
+
+const useBuildTheme = () => {
+  const colorScheme = useColorScheme()
+
+  // Get current theme from the store
+  const currentTheme = useSelector(
+    (state: { theme: ThemeState }) => state.theme.theme || 'default',
+  )
+  const isDark = useSelector(
+    (state: { theme: ThemeState }) => state.theme.darkMode,
+  )
+  const darkMode = useMemo(() => {
+    return isDark === null ? colorScheme === 'dark' : isDark
+  }, [colorScheme, isDark])
+
+  const createTheme = useCallback(() => {
+    // Select the right theme light theme ({} if not exist)
+    const {
+      Variables: themeConfigVars = {} as Partial<ThemeVariables>,
+      ...themeConfig
+    } = themes[currentTheme] || {}
+
+    const {
+      Variables: darkThemeConfigVars = {} as Partial<ThemeVariables>,
+      ...darkThemeConfig
+    } = darkMode ? themes[`${currentTheme}_dark`] || {} : {}
+
+    const themeVariables: ThemeVariables = mergeVariables(
+      DefaultVariables as ThemeVariables,
+      themeConfigVars,
+      darkThemeConfigVars,
+    )
+    const defaultNavTheme = darkMode ? Object.assign(DarkTheme, PaperDarkTheme) : Object.assign(DefaultTheme, PaperDefaultTheme)
+    // Build the default theme
+    const baseTheme: Theme = {
+      Fonts: Fonts(themeVariables),
+      Icons: Icons(themeVariables),
+      Gutters: Gutters(themeVariables),
+      Images: Images(themeVariables),
+      Layout: Layout(themeVariables),
+      Common: Common({
+        ...themeVariables,
+        Layout: Layout(themeVariables),
+        Gutters: Gutters(themeVariables),
+        Fonts: Fonts(themeVariables),
+        Images: Images(themeVariables),
+      }) as ThemeCommon,
+      ...themeVariables,
+      darkMode: !!darkMode,
+      NavigationTheme: defaultNavTheme,
+    }
+
+    // Merge and return the current Theme
+    return buildTheme(
+      !!darkMode,
+      baseTheme,
+      formatTheme(themeVariables, themeConfig || {}),
+      formatTheme(themeVariables, darkThemeConfig || {}),
+    )
+  }, [currentTheme, darkMode])
+
+  return createTheme()
+}
+
+export default useBuildTheme
 
 /**
  * Generate Theme with theme variables
@@ -152,7 +264,6 @@ const buildTheme = (
   themeConfig: Partial<Theme>,
   darkThemeConfig: Partial<Theme>,
 ) => {
-
   return {
     ...mergeTheme(baseTheme, themeConfig, darkThemeConfig),
     darkMode,

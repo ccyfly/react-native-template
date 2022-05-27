@@ -2,15 +2,17 @@ module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
   env: {
     production: {
-      plugins: ['@emotion', 'react-native-paper/babel'],
+      plugins: [
+        '@emotion',
+        'react-native-paper/babel'
+      ],
     },
   },
   plugins: [
     '@emotion',
-    [
-      'module-resolver',
+    ['module-resolver',
       {
-        root: ['./src'],
+        root: ["./src"],
         alias: {
           '@': './src',
         },

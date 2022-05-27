@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next'
 import { Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import useTheme from '@/hooks/useTheme'
 import IconX from '@/components/basic/Icons'
+import useTheme from '@/hooks/useTheme'
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets()
-  const { Layout, Colors, Gutters } = useTheme()
+  const { Colors, Gutters, Layout } = useTheme()
   const { t } = useTranslation()
 
   return (
@@ -16,9 +16,10 @@ const HomeScreen = () => {
       style={[
         Layout.fill,
         Gutters.regularHPadding,
-        {
-          paddingTop: insets.top,
-        },
+        Gutters.regularVPadding,
+        // {
+        //   paddingTop: insets.top,
+        // },
       ]}
     >
       <Text
@@ -30,7 +31,7 @@ const HomeScreen = () => {
       </Text>
       <IconX
         origin={IconX.MATERIAL_COMMUNITY}
-        name='star'
+        name="star"
       />
     </View>
   )

@@ -1,14 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 // import { ThemeType } from '@/constants/enum/ThemeType.enum'
-import { Locale } from '@/configs/constants/type'
+import { Locale, ThemeType } from '@/configs/constants/type'
 
 export type SettingState = {
   locale: Locale
+  isNotificationEnabled: boolean
+  askedLocationPermission: boolean
+  askedLocationPermissionAfterBlocked: boolean
 }
 
 const initialState = {
   locale: Locale.enUS,
+  isNotificationEnabled: false,
+  askedLocationPermission: false,
+  askedLocationPermissionAfterBlocked: false,
 } as SettingState
 
 export const settingSlice = createSlice({
@@ -16,13 +22,27 @@ export const settingSlice = createSlice({
   initialState,
   reducers: {
     setLocale: (state, action: PayloadAction<Locale>) => {
+      const locale: Locale = action.payload
+
       return {
         ...state,
         locale: action.payload,
       }
     },
+    setAskedLocationPermission: (state, action: PayloadAction<boolean>) => {
+      return {
+        ...state,
+        askedLocationPermission: action.payload,
+      }
+    },
+    setAskedLocationPermissionAfterBlocked: (state, action: PayloadAction<boolean>) => {
+      return {
+        ...state,
+        askedLocationPermissionAfterBlocked: action.payload,
+      }
+    },
   },
 })
 
-export const { setLocale } = settingSlice.actions
+export const { setAskedLocationPermission, setAskedLocationPermissionAfterBlocked, setLocale } = settingSlice.actions
 export default settingSlice.reducer

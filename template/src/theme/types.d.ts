@@ -35,6 +35,7 @@ declare module '@/theme/types' {
     onTertiary: string
     surfaceVariant: string
     onSurfaceVariant: string
+    buttonText: string
 
     transparent: string
     inputBackground: string
@@ -42,6 +43,9 @@ declare module '@/theme/types' {
     topBarBackgroundColor: string
     bottomTabActiveTextColor: string
     bottomTabInactiveTextColor: string
+    homeBottomTabBackgroundColor: string
+    mapBottomTabBackgroundColor: string
+    storeListBottomTabBackgroundColor: string
   }
   export type ThemeNavigationColors = PaperColors & NavigationColors & OwnColor
   export type ThemeFontSize = { [key: string]: number }
@@ -80,6 +84,7 @@ declare module '@/theme/types' {
     Gutters: ThemeGutters
     Common: ThemeCommon
     Variables?: Partial<ThemeVariables>
+    NavigationTheme: ThemeNavigationTheme
     darkMode: boolean
   }
   export interface IThemeCommonParams {

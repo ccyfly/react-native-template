@@ -12,7 +12,7 @@ import { setDefaultTheme } from '@/redux/reducers/themeSlice'
 import { selectInitiated } from '@/redux/selectors/nonPersist'
 
 const SplashScreen = () => {
-  const { Layout, Colors } = useTheme()
+  const { Colors, Layout } = useTheme()
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const initiated = useSelector(selectInitiated)
@@ -20,6 +20,7 @@ const SplashScreen = () => {
 
   const navigateToMain = useCallback(() => {
     console.log('navigateToMain initiated', initiated)
+    console.log('navigateToMain timeout', timeout)
     if (initiated && timeout) {
       navigateAndSimpleReset(AppRoutes.HomeScreen)
     }
@@ -44,7 +45,6 @@ const SplashScreen = () => {
   }, [])
 
   useEffect(() => {
-    console.log('initiated', initiated)
     navigateToMain()
   }, [initiated, timeout])
 

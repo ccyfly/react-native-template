@@ -1,8 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import {
-  combineReducers,
-  configureStore,
-} from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import createDebugger from 'redux-flipper'
 import {
   createMigrate,
@@ -20,6 +17,7 @@ import {
 import immutableTransform from 'redux-persist-transform-immutable'
 import createSagaMiddleware from 'redux-saga'
 
+// import createSagaMiddleware from 'redux-saga'
 import rootReducer, { blacklist, middlewares } from '@/redux/reducers'
 import rootSaga from '@/redux/saga'
 

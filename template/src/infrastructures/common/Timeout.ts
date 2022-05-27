@@ -7,7 +7,7 @@ class Timeout<T> {
   }
 
   public start() {
-    return new Promise<T>((_, reject) => {
+    return new Promise<T>((resolve, reject) => {
       this.timeoutID = setTimeout(() => {
         reject('timeout')
         // this.clear();

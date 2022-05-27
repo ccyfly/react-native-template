@@ -1,8 +1,11 @@
 {
-  "app_name": "例子",
+  "app_name": "ProjectName",
   "version": "版本: {{version_name}} (Build {{build}})",
   "button": {
     "confirm": "確認",
-    "cancel": "取消"
+    "cancel": "取消",
+    "ok": "好",
+    "submit": "提交",
+    "choose": "選擇"
   }
 }

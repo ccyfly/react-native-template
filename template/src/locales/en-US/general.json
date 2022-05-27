@@ -1,8 +1,11 @@
 {
-  "app_name": "Example",
+  "app_name": "ProjectName",
   "version": "Version: {{version_name}} (Build {{build}})",
   "button": {
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "ok": "OK",
+    "submit": "Submit",
+    "choose": "Choose"
   }
 }

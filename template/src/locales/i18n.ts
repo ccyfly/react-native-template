@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/naming-convention */
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import i18n, {
-  InitOptions,
-  LanguageDetectorAsyncModule,
-  Services,
-} from 'i18next'
+import i18n, { InitOptions, LanguageDetectorAsyncModule, Services } from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import * as RNLocalize from 'react-native-localize'
 
@@ -13,6 +9,7 @@ import { StorageKeys } from '@/configs'
 import { Locale } from '@/configs/constants/type'
 
 import en_US from './en-US/index'
+import zh_CN from './zh-CN/index'
 import zh_TW from './zh-TW/index'
 
 const i18nOptions: InitOptions = {
@@ -27,6 +24,7 @@ const i18nOptions: InitOptions = {
   }, // not needed for react as it escapes by default
   resources: {
     en_US: en_US,
+    zh_CN: zh_CN,
     zh_TW: zh_TW,
   },
   react: {
@@ -79,36 +77,16 @@ const languageDetector: LanguageDetectorAsyncModule = {
           callback(bestLng)
 
           return
+        } else {
+          console.log('i18n detector AsyncStorage APP_LANG', value)
+          callback(value)
+
+          return
         }
-        console.log('i18n detector AsyncStorage APP_LANG', value)
-        callback(value)
       })
-    // void AsyncStorage.getItem(, (err, lng) => {
-    //   // Case 1: Error fetching stored data
-    //   if (err || !lng) {
-    //     if (err) {
-    //       console.log('Error fetching "APP_LANG" from async store', err)
-    //     } else {
-    //       console.log(
-    //         'No language is set, choosing the best available or English as fallback',
-    //       )
-    //     }
-    //     const preferredLocale = RNLocalize.getLocales()[0]
-    //     const deviceLocale = preferredLocale.languageTag
-    //     const bestLng = findBestMatchedDeviceLanguage(deviceLocale)
-
-    //     console.log('i18n detector bestLng', bestLng)
-    //     callback(bestLng)
-
-    //     return
-    //   }
-    //   console.log('i18n detector AsyncStorage APP_LANG', lng)
-    //   callback(lng)
-    // })
   },
   cacheUserLanguage: (lng: string) => {
     void AsyncStorage.setItem(StorageKeys.APP_LANG, lng)
-    // void AsyncStorage.setItem('APP_LANG', lng)
     console.log('i18n detector cacheUserLanguage', lng)
 
     return

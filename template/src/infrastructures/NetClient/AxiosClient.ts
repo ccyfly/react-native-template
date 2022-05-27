@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
 
-import logger from '../common/logger'
+import * as logger from '../common/logger'
 import AbstractClient from './AbstractClient'
 import APIResponse from './ApiResponse'
 import { API } from './config'

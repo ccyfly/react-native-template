@@ -7,6 +7,7 @@ import { Theme } from '@/theme/types'
 
 import IconX from '../Icons'
 
+
 interface IBackButtonProps {
   onPress: () => void
 }
@@ -19,6 +20,10 @@ const BackButton: FunctionComponent<IBackButtonProps> = ({ onPress }: IBackButto
   return (
     <TouchableOpacity
       onPress={onPress}
+      style={[
+        // Gutters.tinyPadding,
+        // Gutters.smallLMargin,
+      ]}
     >
       <IconX
         origin={IconX.MATERIAL_ICONS}
