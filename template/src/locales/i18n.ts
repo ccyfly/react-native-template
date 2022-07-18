@@ -13,7 +13,7 @@ import zh_CN from './zh-CN/index'
 import zh_TW from './zh-TW/index'
 
 const i18nOptions: InitOptions = {
-  compatibilityJSON: 'v3',
+  compatibilityJSON: 'v4',
   lng: 'zh_TW',
   fallbackLng: 'zh_TW',
   debug: true,

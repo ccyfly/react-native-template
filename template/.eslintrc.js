@@ -1,15 +1,8 @@
-/**
- * Metro configuration for React Native
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
- module.exports = {
+module.exports = {
   root: true,
   settings: {
     react: {
-      version: "16.13"
+      version: "17"
     },
     'import/parsers': {
       '@typescript-eslint/parser': [
