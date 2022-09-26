@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/naming-convention */
+import 'intl-pluralrules'
+
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import i18n, { InitOptions, LanguageDetectorAsyncModule, Services } from 'i18next'
 import { initReactI18next } from 'react-i18next'
