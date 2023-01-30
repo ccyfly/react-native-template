@@ -1,7 +1,23 @@
 import { StyleSheet } from 'react-native'
 
-import { ThemeGutters, ThemeVariables } from '@/theme/types'
+import { StyleType, ThemeGutters, ThemeMetricsSizes, ThemeVariables } from '@/theme/types'
 
+export type GutterType = {
+  BMargin: StyleType
+  TMargin: StyleType
+  RMargin: StyleType
+  LMargin: StyleType
+  VMargin: StyleType
+  HMargin: StyleType
+  Margin: StyleType
+  BPadding: StyleType
+  TPadding: StyleType
+  RPadding: StyleType
+  LPadding: StyleType
+  VPadding: StyleType
+  HPadding: StyleType
+  Padding: StyleType
+}
 /**
  * Generate Styles depending on MetricsSizes vars availabled at ./Theme/Variables
  * Styles are like :
@@ -69,5 +85,5 @@ export default  ({ MetricsSizes: metricsSizes }: ThemeVariables): ThemeGutters =
       }),
       {},
     ),
-  })
+  }) as ThemeGutters
 }

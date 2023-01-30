@@ -1,5 +1,5 @@
 import { Dimensions, Platform } from 'react-native'
-const { width, height } = Dimensions.get('window')
+const { height, width } = Dimensions.get('window')
 
 const metrics = {
   s5: 5,

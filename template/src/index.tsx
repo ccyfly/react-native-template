@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { View } from 'react-native'
-import { Colors } from 'react-native-paper'
+import { MD2Colors as Colors } from 'react-native-paper'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'

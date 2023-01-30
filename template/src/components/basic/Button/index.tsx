@@ -12,8 +12,8 @@ interface IButtonProps {
   text: string
   isPrimary?: boolean
   buttonColor?: string
-  style?: ViewStyle
-  textStyle?: TextStyle
+  style?: ViewStyle|ViewStyle[]
+  textStyle?: TextStyle|TextStyle[]
 }
 const Button: React.FC<IButtonProps> = ({
   buttonColor,
@@ -33,9 +33,11 @@ const Button: React.FC<IButtonProps> = ({
   } = theme
 
   let buttonStyle = Common.button.rounded
+  let isOutline = false
   if (type === 'round') {
     buttonStyle = isPrimary ? Common.button.rounded : Common.button.roundedSecondary
   } else if (type === 'outline') {
+    isOutline = true
     buttonStyle = isPrimary ? Common.button.outline : Common.button.outlineSecondary
   } else if (type === 'contained') {
     buttonStyle = isPrimary ? Common.button.base : Common.button.baseSecondary
@@ -56,7 +58,7 @@ const Button: React.FC<IButtonProps> = ({
       onPress={onPress}
       activeOpacity={0.5}
     >
-      <Text style={[isPrimary ? Fonts.primaryButtonTextRegular : Fonts.secondaryButtonTextRegular, textStyle ? textStyle : {}]}>{text}</Text>
+      <Text style={[isOutline ? Fonts.outlineButtonTextRegular : isPrimary ? Fonts.primaryButtonTextRegular : Fonts.secondaryButtonTextRegular, textStyle ? textStyle : {}]}>{text}</Text>
     </TouchableOpacity>
   )
 }

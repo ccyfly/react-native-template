@@ -442,7 +442,8 @@ module.exports = {
     'newline-destructuring/newline': [
       "error",
       {
-        items: 3
+        items: 3,
+        itemsWithRest: 2,
       }
     ],
     'sort-destructure-keys/sort-destructure-keys': [

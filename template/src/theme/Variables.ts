@@ -6,12 +6,14 @@
  */
 
 import {
+  FontScale,
   OwnColor,
   ThemeColors,
   ThemeFontSize,
   ThemeIconSize,
   ThemeMetricsSizes,
   ThemeNavigationColors,
+  ThemeScaledFontSize,
 } from '@/theme/types'
 
 const ownColor: OwnColor =  {
@@ -88,6 +90,26 @@ export const FontSize: ThemeFontSize = {
   large: 24,
   xlarge: 36,
 }
+export const ScaledFontSize: ThemeScaledFontSize = {
+  [FontScale.SMALL]: {
+    small: 12,
+    regular: 16,
+    large: 24,
+    xlarge: 36,
+  },
+  [FontScale.MEDIUM]: {
+    small: 12,
+    regular: 16,
+    large: 24,
+    xlarge: 36,
+  },
+  [FontScale.LARGE]: {
+    small: 16,
+    regular: 20,
+    large: 28,
+    xlarge: 40,
+  },
+}
 
 export const IconSize: ThemeIconSize = {
   small: 24,
@@ -110,11 +132,11 @@ export const MetricsSizes: ThemeMetricsSizes = {
   regular,
   large,
 }
-
 export default {
   Colors,
   // NavigationColors,
   IconSize,
   FontSize,
+  ScaledFontSize,
   MetricsSizes,
 }

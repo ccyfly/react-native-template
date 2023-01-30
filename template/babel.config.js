@@ -10,9 +10,10 @@ module.exports = {
   },
   plugins: [
     '@emotion',
-    ['module-resolver',
+    [
+      'module-resolver',
       {
-        root: ["./src"],
+        root: ["."],
         alias: {
           '@': './src',
         },

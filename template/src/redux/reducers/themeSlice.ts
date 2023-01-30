@@ -1,14 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+import { FontScale } from '@/theme/types'
+
+type FontScaleType = keyof typeof FontScale
 export type ThemeState = {
   theme: 'default' | null | undefined
   darkMode: boolean | null | undefined
+  fontScale: FontScaleType | null | undefined
 }
 
 type ThemePayload = {
   payload: {
-    theme: 'default' | null | undefined
-    darkMode: boolean | null | undefined
+    theme?: 'default' | null | undefined
+    darkMode?: boolean | null | undefined
+    fontScale?: FontScaleType | null | undefined
   }
 }
 
@@ -17,23 +22,28 @@ const slice = createSlice({
   initialState: {
     theme: null,
     darkMode: null,
+    fontScale: FontScale.MEDIUM,
   } as ThemeState,
   reducers: {
-    changeTheme: (state, { payload: { theme, darkMode } }: ThemePayload) => {
+    changeTheme: (state, { payload: { darkMode, fontScale, theme } }: ThemePayload) => {
       if (typeof theme !== 'undefined') {
         state.theme = theme
       }
       if (typeof darkMode !== 'undefined') {
         state.darkMode = darkMode
       }
+      if (typeof fontScale !== 'undefined') {
+        state.fontScale = fontScale
+      }
     },
     setDefaultTheme: (
-      state,
-      { payload: { theme, darkMode } }: ThemePayload,
+        state,
+        { payload: { darkMode, fontScale, theme } }: ThemePayload,
     ) => {
       if (!state.theme) {
         state.theme = theme
         state.darkMode = darkMode
+        state.fontScale = fontScale
       }
     },
   },

@@ -8,7 +8,7 @@ export default ({ Colors: colors, Gutters: gutters, Layout: layout }: IThemeComm
     ...gutters.regularHPadding,
     height: 40,
     backgroundColor: colors.primary,
-    borderRadius: 2,
+    borderRadius: 4,
   }
   const rounded = {
     ...base,

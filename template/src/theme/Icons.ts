@@ -23,6 +23,6 @@ export default  ({ IconSize: iconSize }: ThemeVariables): ThemeIcon => {
       }),
       {},
     ),
-  })
+  }) as ThemeIcon
 }
 

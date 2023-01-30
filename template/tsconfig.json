@@ -1,9 +1,14 @@
-// prettier-ignore
 {
-  "extends": "@tsconfig/react-native/tsconfig.json",     /* Recommended React Native TSConfig base */
+  "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
+    "types": [
+      "jest",
+      "react-native",
+      "react-test-renderer",
+      "node"
+    ],
     /* Completeness */
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
     "target": "esnext",
@@ -24,12 +29,12 @@
 
     /* Type Checking */
     "strict": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./*"
+        "src/*"
       ]
-    }  
+    }
   },
   "exclude": [
     "node_modules", "babel.config.js", "metro.config.js", "jest.config.js"
