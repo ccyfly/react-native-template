@@ -1,11 +1,26 @@
 {
   "app_name": "ProjectName",
-  "version": "Version: {{version_name}} (Build {{build}})",
   "button": {
-    "confirm": "Confirm",
     "cancel": "Cancel",
+    "choose": "Choose",
+    "confirm": "Confirm",
+    "done": "Done",
+    "edit": "Edit",
+    "learn_more": "Learn More",
     "ok": "OK",
+    "redeem": "Redeem",
+    "reset": "Reset",
+    "retry": "Retry",
+    "show_more": "Show More",
     "submit": "Submit",
-    "choose": "Choose"
-  }
+    "save": "Save"
+  },
+  "date_display": "{{day}} {{month}} {{year}}",
+  "loading": "Loading...",
+  "placeholder": {
+    "search": "Search"
+  },
+  "version": "App Version",
+  "version_string": "{{version_name}}",
+  "version_stringb": "{{version_name}} (Build {{build}})"
 }

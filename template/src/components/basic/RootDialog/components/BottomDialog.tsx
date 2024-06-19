@@ -6,9 +6,7 @@ import Dialog from '../Dialog'
 import type { DialogProps } from '../type'
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'flex-end',
-  },
+  container: { justifyContent: 'flex-end' },
   modal: {
     borderBottomRightRadius: 0,
     borderBottomLeftRadius: 0,
@@ -16,15 +14,13 @@ const styles = StyleSheet.create({
 })
 
 const BottomDialog = ({
-  style,
   modalStyle,
+  style,
   ...restProps
 }: DialogProps) =>
   (
     <Dialog
-      modalAnimation={new SlideAnimation({
-        slideFrom: 'bottom',
-      })}
+      modalAnimation={new SlideAnimation({ slideFrom: 'bottom' })}
       {...restProps}
       style={StyleSheet.flatten([styles.container, style])}
       modalStyle={StyleSheet.flatten([styles.modal, modalStyle])}

@@ -19,6 +19,27 @@ module.exports = {
         },
       },
     ],
-    'react-native-reanimated/plugin',
+    [
+      'react-native-reanimated/plugin',
+      {
+        globals: ['__scanCodes'],
+      },
+    ],
+    ["module:react-native-dotenv", {
+      "envName": "APP_ENV",
+      "moduleName": "@env",
+      "path": ".env",
+      "blocklist": null,
+      "allowlist": null,
+      // "blacklist": null, // DEPRECATED
+      // "whitelist": null, // DEPRECATED
+      "safe": false,
+      "allowUndefined": true,
+      "verbose": false
+    }],
+    ["@babel/plugin-transform-private-methods", { "loose": true }],
+    // {
+    //   globals: ['__scanCodes'],
+    // },
   ],
 };

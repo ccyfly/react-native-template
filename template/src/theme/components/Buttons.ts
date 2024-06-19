@@ -1,57 +1,37 @@
 import { StyleSheet } from 'react-native'
 
-import { IThemeCommonParams } from '@/theme/types'
+import { ButtonsStyle, IThemeCommonParams } from '@/theme/types'
 
-export default ({ Colors: colors, Gutters: gutters, Layout: layout }: IThemeCommonParams) => {
+export default ({ Colors: colors, Gutters: gutters, Layout: layout, Param: param }: IThemeCommonParams): ButtonsStyle => {
+  const roundness = param?.roundness || 4
+  const borderRadius = roundness * 6
   const base = {
-    ...layout.center,
-    ...gutters.regularHPadding,
-    height: 40,
-    backgroundColor: colors.primary,
-    borderRadius: 4,
+    borderRadius: borderRadius,
   }
   const rounded = {
     ...base,
-    borderRadius: 12,
+    borderRadius: borderRadius,
   }
   const outline = {
     ...base,
-    backgroundColor: colors.transparent,
-    borderWidth: 2,
-    borderColor: colors.primary,
+    borderRadius: borderRadius,
+    borderWidth: 1,
   }
-  const baseSecondary = {
-    ...base,
-    backgroundColor: colors.secondary,
+  const content = {
+    ...layout.row,
+    minWidth: 40,
+    minHeight: 40,
   }
-  const roundedSecondary = {
-    ...baseSecondary,
-    borderRadius: 16,
+  const contentIconOnly = {
+    ...content,
+    minWidth: 40,
   }
 
   return StyleSheet.create({
     base,
+    content,
+    contentIconOnly,
     rounded,
-    outline: {
-      ...outline,
-    },
-    outlineRounded: {
-      ...rounded,
-      backgroundColor: colors.transparent,
-      borderWidth: 2,
-      borderColor: colors.primary,
-    },
-    baseSecondary,
-    roundedSecondary,
-    outlineSecondary: {
-      ...outline,
-      borderColor: colors.secondary,
-    },
-    outlineRoundedSecondary: {
-      ...roundedSecondary,
-      backgroundColor: colors.transparent,
-      borderWidth: 2,
-      borderColor: colors.secondary,
-    },
+    outline: { ...outline },
   })
 }

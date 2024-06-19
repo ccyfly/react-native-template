@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { isArray } from 'lodash'
 import React, { Component, ReactNode } from 'react'
 import {
   Animated,
@@ -24,16 +25,17 @@ type Props = {
   onSwipeOut?: (event: DragEvent) => void
   swipeThreshold?: number
   swipeDirection?: SwipeDirection | SwipeDirection[]
-  children: ({
-    onLayout,
-    pan,
-  }: {
+  children: ({ onLayout, pan }: {
     onLayout: (event: LayoutChangeEvent) => void
     pan: Animated.ValueXY
   }) => ReactNode
 }
+type State = {
+  x: number
+  y: number
+}
 
-export default class DraggableView extends Component<Props> {
+export default class DraggableView extends Component<Props, State> {
   static defaultProps = {
     style: null,
     onMove: () => { },
@@ -46,7 +48,7 @@ export default class DraggableView extends Component<Props> {
   }
 
   pan: Animated.ValueXY
-  allowedDirections: any[]
+  allowedDirections: SwipeDirection[]
   layout: LayoutRectangle
   panEventListenerId: any
   currentSwipeDirection: string | null
@@ -54,7 +56,7 @@ export default class DraggableView extends Component<Props> {
     super(props)
 
     this.pan = new Animated.ValueXY()
-    this.allowedDirections = [].concat(props.swipeDirection)
+    this.allowedDirections = isArray(props.swipeDirection) ? props.swipeDirection?.slice() || [] : (props.swipeDirection ? [props.swipeDirection] : [])
     this.layout = {
       x: 0,
       y: 0,
@@ -62,11 +64,20 @@ export default class DraggableView extends Component<Props> {
       height: 0,
     }
     this.currentSwipeDirection = null
+    this.state = {
+      x: 0,
+      y: 0,
+    }
   }
 
   componentDidMount() {
     this.panEventListenerId = this.pan.addListener((axis) => {
-      this.props.onMove(this.createDragEvent(axis))
+      this.setState({
+        ...axis,
+      })
+      if (this.props.onMove) {
+        this.props.onMove(this.createDragEvent(axis))
+      }
     })
   }
 
@@ -89,40 +100,40 @@ export default class DraggableView extends Component<Props> {
   }
 
   getDisappearDirection() {
-    const { width, height } = Dimensions.get('window')
+    const { height, width } = Dimensions.get('window')
     const vertical = ((height / 2) + (this.layout.height / 2))
     const horizontal = ((width / 2) + (this.layout.width / 2))
-    let toValue = {}
+    // let toValue = {}
     if (this.currentSwipeDirection === 'up') {
-      toValue = {
+      return  {
         x: 0,
         y: -vertical,
       }
     } else if (this.currentSwipeDirection === 'down') {
-      toValue = {
+      return {
         x: 0,
         y: vertical,
       }
     } else if (this.currentSwipeDirection === 'left') {
-      toValue = {
+      return {
         x: -horizontal,
         y: 0,
       }
     } else if (this.currentSwipeDirection === 'right') {
-      toValue = {
+      return {
         x: horizontal,
         y: 0,
       }
     }
 
-    return toValue
+    return null
   }
 
-  isValidHorizontalSwipe({ vx, dy }: { vx: number; dy: number }) {
+  isValidHorizontalSwipe({ dy, vx }: { vx: number; dy: number }) {
     return this.isValidSwipe(vx, dy)
   }
 
-  isValidVerticalSwipe({ vy, dx }: { vy: number; dx: number }) {
+  isValidVerticalSwipe({ dx, vy }: { vy: number; dx: number }) {
     return this.isValidSwipe(vy, dx)
   }
 
@@ -135,7 +146,7 @@ export default class DraggableView extends Component<Props> {
     return Math.abs(velocity) > velocityThreshold && Math.abs(directionalOffset) < directionalOffsetThreshold
   }
 
-  isAllowedDirection({ dy, dx }: { dx: number; dy: number }) {
+  isAllowedDirection({ dx, dy }: { dx: number; dy: number }) {
     const draggedDown = dy > 0
     const draggedUp = dy < 0
     const draggedLeft = dx < 0
@@ -184,48 +195,50 @@ export default class DraggableView extends Component<Props> {
       if (this.isAllowedDirection(gestureState)) {
         let animEvent = {}
         if (isVerticalSwipe(this.currentSwipeDirection)) {
-          animEvent = {
-            dy: this.pan.y,
-          }
+          animEvent = { dy: this.pan.y }
         } else if (isHorizontalSwipe(this.currentSwipeDirection)) {
-          animEvent = {
-            dx: this.pan.x,
-          }
+          animEvent = { dx: this.pan.x }
         }
         Animated.event([null, animEvent])(event, gestureState)
-        this.props.onSwiping(this.createDragEvent({
-          x: this.pan.x._value,
-          y: this.pan.y._value,
-        }))
+        if (this.props.onSwiping) {
+          this.props.onSwiping(this.createDragEvent({
+            x: this.state.x,
+            y: this.state.y,
+          }))
+        }
       }
     },
     onPanResponderRelease: () => {
       this.pan.flattenOffset()
       const event = this.createDragEvent({
-        x: this.pan.x._value,
-        y: this.pan.y._value,
+        x: this.state.x,
+        y: this.state.y,
       })
       // on swipe out
       if (
         this.props.onSwipeOut &&
-        Math.abs(this.pan.y._value) > this.props.swipeThreshold ||
-        Math.abs(this.pan.x._value) > this.props.swipeThreshold
+        Math.abs(this.state.x) > (this.props.swipeThreshold || 100) ||
+        Math.abs(this.state.y) > (this.props.swipeThreshold || 100)
       ) {
-        this.props.onSwipingOut(event)
-        Animated.spring(this.pan, {
-          toValue: this.getDisappearDirection(),
-          velocity: 0,
-          tension: 65,
-          friction: 11,
-        }).start(() => {
-          this.props.onSwipeOut(event)
-        })
+        if (this.props.onSwipingOut) this.props.onSwipingOut(event)
+        const toValue = this.getDisappearDirection()
+        if (toValue !== null) {
+          Animated.spring(this.pan, {
+            toValue: toValue,
+            velocity: 0,
+            tension: 65,
+            friction: 11,
+            useNativeDriver: false,
+          }).start(() => {
+            if (this.props.onSwipeOut) this.props.onSwipeOut(event)
+          })
+        }
 
         return
       }
       // on release
       this.currentSwipeDirection = null
-      this.props.onRelease(event)
+      if (this.props.onRelease) this.props.onRelease(event)
       Animated.spring(this.pan, {
         toValue: {
           x: 0,
@@ -240,7 +253,7 @@ export default class DraggableView extends Component<Props> {
   })
 
   render() {
-    const { style, children: renderContent } = this.props
+    const { children: renderContent, style } = this.props
     const content = renderContent({
       pan: this.pan,
       onLayout: this.onLayout,

@@ -23,6 +23,7 @@ const slice = createSlice({
     theme: null,
     darkMode: null,
     fontScale: FontScale.MEDIUM,
+    darkModePreference: 'light',
   } as ThemeState,
   reducers: {
     changeTheme: (state, { payload: { darkMode, fontScale, theme } }: ThemePayload) => {
@@ -37,8 +38,8 @@ const slice = createSlice({
       }
     },
     setDefaultTheme: (
-        state,
-        { payload: { darkMode, fontScale, theme } }: ThemePayload,
+      state,
+      { payload: { darkMode, fontScale, theme } }: ThemePayload,
     ) => {
       if (!state.theme) {
         state.theme = theme

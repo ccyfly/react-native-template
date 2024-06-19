@@ -1,26 +1,21 @@
-import { CommonActions, createNavigationContainerRef } from '@react-navigation/native'
-import { createStackNavigator, StackHeaderProps } from '@react-navigation/stack'
-import React, { useCallback } from 'react'
+import { createStackNavigator } from '@react-navigation/stack'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { SafeAreaView, StatusBar, View } from 'react-native'
 
 import Header, { HeaderProps } from '@/components/basic/Header'
-import HomeScreen from '@/screens/Home'
+import DrawerNav from '@/navigators/DrawerNav'
 import SplashScreen from '@/screens/Splash'
 
-import { AppRoutes,  RootStackNavigationParamList } from './types'
+import { AppRoutes, RootStackNavigationParamList } from './types'
 
 const Stack = createStackNavigator<RootStackNavigationParamList>()
 
 const RootStack = (): React.ReactElement => {
-  const { t } = useTranslation()
-
   const renderHeader = (props: HeaderProps) => {
     return (
-      <View>
-        {/* <StatusBar></StatusBar> */}
+      <>
         <Header {...props} />
-      </View>
+      </>
     )
   }
 
@@ -28,25 +23,18 @@ const RootStack = (): React.ReactElement => {
     <Stack.Navigator
       // headerMode="none"
       // headerMode={'float'}
+      id={'Root'}
       initialRouteName={AppRoutes.SplashScreen}
     >
       <Stack.Screen
         name={AppRoutes.SplashScreen}
         component={SplashScreen}
-        options={{
-          headerShown: false,
-        }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
-        name={AppRoutes.HomeScreen}
-        component={HomeScreen}
-        options={{
-          presentation: 'card',
-          headerShown: true,
-          title: t('screens:home'),
-          headerBackTitleVisible: false,
-          header: renderHeader,
-        }}
+        name={AppRoutes.MainDrawerNav}
+        component={DrawerNav}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   )

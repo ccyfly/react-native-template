@@ -1,6 +1,6 @@
-// import { combineReducers } from 'redux'
-import { combineReducers } from '@reduxjs/toolkit'
+import { combineReducers, Middleware } from '@reduxjs/toolkit'
 
+import app from './appSlice'
 import nonPersist from './nonPersistSlice'
 import setting from './settingSlice'
 import theme from './themeSlice'
@@ -9,6 +9,7 @@ export default combineReducers({
   nonPersist,
   setting,
   theme,
+  app,
 })
 
 export const blacklist = [
@@ -17,4 +18,4 @@ export const blacklist = [
   'nonPersist',
 ]
 
-export const middlewares = []
+export const middlewares: Middleware[] = []

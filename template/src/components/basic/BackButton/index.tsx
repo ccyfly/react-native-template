@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react'
 // import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity } from 'react-native'
 
+import { PressableOpacity } from '@/components/basic'
 import useTheme from '@/hooks/useTheme'
 import { Theme } from '@/theme/types'
 
@@ -10,27 +11,24 @@ import IconX from '../Icons'
 
 interface IBackButtonProps {
   onPress: () => void
+  color?: string
 }
-const BackButton: FunctionComponent<IBackButtonProps> = ({ onPress }: IBackButtonProps) => {
-  const myOwnTheme: Theme = useTheme()
-  const { Colors, Gutters } = myOwnTheme
-  // console.log('colors', colors);
+const BackButton: FunctionComponent<IBackButtonProps> = ({ color, onPress }: IBackButtonProps) => {
+  const { Colors, Gutters } = useTheme()
   const { accent, onPrimary } = Colors
 
   return (
-    <TouchableOpacity
+    <PressableOpacity
       onPress={onPress}
-      style={[
-        // Gutters.tinyPadding,
-        // Gutters.smallLMargin,
-      ]}
+      style={[]}
     >
       <IconX
         origin={IconX.MATERIAL_ICONS}
         name={'arrow-back-ios'}
-        color={onPrimary} size={24}
+        color={color ? color : onPrimary}
+        size={32}
       />
-    </TouchableOpacity>
+    </PressableOpacity>
   )
 }
 export default BackButton

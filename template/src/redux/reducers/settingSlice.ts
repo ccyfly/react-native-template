@@ -4,14 +4,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Locale, ThemeType } from '@/configs/constants/type'
 
 export type SettingState = {
-  locale: Locale
+  locale: Locale|undefined
   isNotificationEnabled: boolean
   askedLocationPermission: boolean
   askedLocationPermissionAfterBlocked: boolean
 }
 
 const initialState = {
-  locale: Locale.enUS,
+  locale: undefined,
   isNotificationEnabled: false,
   askedLocationPermission: false,
   askedLocationPermissionAfterBlocked: false,

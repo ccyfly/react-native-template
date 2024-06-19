@@ -30,26 +30,17 @@ const styles = StyleSheet.create({
 })
 
 const ModalTitle = ({
-  title,
-  style,
-  textStyle,
-  hasTitleBar = true,
-  align = 'center',
+  align = 'center', hasTitleBar = true, style, textStyle, title,
 }: DialogTitleProps) => {
   const titleBar = hasTitleBar ? styles.titleBar : null
-  const titleAlign = {
-    alignItems: align,
-  }
+  const titleAlign = { alignItems: align }
   const { Fonts } = useTheme()
 
   return (
-    <View style={[
-      styles.title, titleAlign, titleBar, style,
-    ]}
-    >
+    <View style={[styles.title, titleAlign, titleBar, style]}>
       <Text style={[
         styles.text,
-        Fonts.titleFontStyle,
+        Fonts.title,
         textStyle,
       ]}
       >

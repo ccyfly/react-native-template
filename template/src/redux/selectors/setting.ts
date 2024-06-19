@@ -14,7 +14,7 @@ export const selectLocale = createSelector(
 export const selectApiLocale = createSelector(
   selectState,
   (state: SettingState) => {
-    return state.locale.replace('_', '-')
+    return state.locale?.replace('_', '-')
   }
 )
 

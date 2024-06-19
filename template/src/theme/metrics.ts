@@ -25,10 +25,10 @@ const metrics = {
 
   icons: {
     tiny: 15,
-    small: 24,
-    medium: 32,
-    large: 45,
-    xl: 50,
+    small: 32,
+    medium: 40,
+    large: 48,
+    xl: 56,
   },
 
   images: {
@@ -38,9 +38,7 @@ const metrics = {
     logo: 200,
   },
 
-  iconButton: {
-    padding: 4,
-  },
+  iconButton: { padding: 4 },
 
   padding: {
     all: 10,

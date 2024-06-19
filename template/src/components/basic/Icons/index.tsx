@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-duplicate-type-constituents */
 import React from 'react'
-import { TextStyle, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, TextStyle, ViewStyle } from 'react-native'
+import { createIconSetFromFontello, createIconSetFromIcoMoon } from 'react-native-vector-icons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Entypo from 'react-native-vector-icons/Entypo'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
@@ -11,6 +13,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Octicons from 'react-native-vector-icons/Octicons'
+
+// import fontelloConfig from '@/assets/fonts/config.json'
+// const MyIcon = createIconSetFromFontello(fontelloConfig, 'myicon')
 
 const IconType = {
   ICONICONS: 'ionicons',
@@ -23,16 +28,18 @@ const IconType = {
   ENTYPO: 'ENTYPO',
   OCTICONS: 'OCTICONS',
   MATERIAL_COMMUNITY: 'MATERIALCOMMUNITY',
+  // MY_ICON: 'myicon',
 }
 type IconType = typeof IconType[keyof typeof IconType]
-interface IProps {
+interface IIconXProps {
   origin: IconType
   name: string
   color?: string
   size?: number
   paddingLeft?: number
-  style?: ViewStyle|TextStyle
+  // style?: StyleProp<TextStyle> | undefined
   forTouchable?: boolean
+  style?: StyleProp<TextStyle>
 }
 
 type IconXType = typeof AntDesign |
@@ -47,17 +54,17 @@ type IconXType = typeof AntDesign |
 
 type IPanel<P> = React.FunctionComponent<P> & typeof IconType
 
-const IconX: IPanel<IProps> = ({
+const IconX: IPanel<IIconXProps> = ({
   color,
   name,
   origin,
   paddingLeft,
   size,
-  style,
-}: IProps) => {
+  style = {},
+}: IIconXProps) => {
 
   const colorx = color || '#aaaaaa'
-  const sizex = size || 24
+  const sizex = size || 26
   const namex = name || 'right'
   const paddingx = paddingLeft || 0
 
@@ -98,6 +105,9 @@ const IconX: IPanel<IProps> = ({
     case IconType.MATERIAL_COMMUNITY:
       Element = MaterialCommunityIcons
       break
+      // case IconType.MY_ICON:
+      //   Element = MyIcon
+      //   break
 
     default:
       Element = Ionicons
@@ -109,12 +119,9 @@ const IconX: IPanel<IProps> = ({
       name={namex}
       size={sizex}
       color={colorx}
-      style={[
-        {
-          paddingLeft: paddingx,
-        },
-        style,
-      ]}
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      style={[{ paddingLeft: paddingx }, style]}
     />
   )
 }
@@ -128,6 +135,7 @@ IconX.ICONICONS = IconType.ICONICONS
 IconX.MATERIAL_COMMUNITY = IconType.MATERIAL_COMMUNITY
 IconX.MATERIAL_ICONS = IconType.MATERIAL_ICONS
 IconX.OCTICONS = IconType.OCTICONS
+// IconX.MY_ICON = IconType.MY_ICON
 
-// export default Object.assign(IconX, IconType)
 export default IconX
+

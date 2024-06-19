@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import { ApiResponse, ApisauceInstance, create } from 'apisauce'
-import { AxiosError } from 'axios'
+import { AxiosError, AxiosResponse } from 'axios'
 
-import * as logger from '../common/logger'
+import logger from '../common/logger'
 import AbstractClient from './AbstractClient'
 import APIResponse from './ApiResponse'
 import { API } from './config'
@@ -24,9 +24,7 @@ export default class ApiSauceClient extends AbstractClient<ApisauceInstance>{
       const paramString = this.paramsToQueryString(params)
       const finalPath = path + (paramString.length > 0 ? `?${paramString}` : '')
       logger.request('GET', headerParams, finalPath)
-      this.instance.get<T>(finalPath, {
-        headers: headerParams,
-      }).then((response: ApiResponse<T>) => {
+      this.instance.get<T>(finalPath, { headers: headerParams }).then((response: ApiResponse<T>) => {
         logger.resp(response)
         logger.responseBody(response.data as Record<string, unknown>)
         if (response.status && response.status >= 200 && response.status <= 299) {
@@ -38,7 +36,7 @@ export default class ApiSauceClient extends AbstractClient<ApisauceInstance>{
         }
       })
         .catch((error: Error) => {
-          const axiosErrorResponse = error.hasOwnProperty('response') ? (error as AxiosError).response : undefined
+          const axiosErrorResponse = error.hasOwnProperty('response') ? (error as AxiosError<T>).response : undefined
           if (axiosErrorResponse !== undefined) {
             const errorResponse = new APIResponse<T>(axiosErrorResponse.status, axiosErrorResponse.headers, axiosErrorResponse.data, error)
             resolve(errorResponse)
@@ -52,9 +50,7 @@ export default class ApiSauceClient extends AbstractClient<ApisauceInstance>{
   public postJson<T>(path: string, json: Record<string, any>, headerParams: Record<string, string>): Promise<APIResponse<T>> {
     return new Promise<APIResponse<T>>((resolve) => {
       const finalPath = path
-      this.instance.post<T>(finalPath, json, {
-        headers: headerParams,
-      }).then((response: ApiResponse<T>) => {
+      this.instance.post<T>(finalPath, json, { headers: headerParams }).then((response: ApiResponse<T>) => {
         logger.resp(response)
         logger.responseBody(response.data as Record<string, unknown>)
         if (response.status && response.status >= 200 && response.status <= 299) {
@@ -66,7 +62,7 @@ export default class ApiSauceClient extends AbstractClient<ApisauceInstance>{
         }
       })
         .catch((error: AxiosError|Error) => {
-          const axiosErrorResponse = error.hasOwnProperty('response') ? (error as AxiosError).response : undefined
+          const axiosErrorResponse = error.hasOwnProperty('response') ? (error as AxiosError<T>).response : undefined
           if (axiosErrorResponse !== undefined) {
             const errorResponse = new APIResponse<T>(axiosErrorResponse.status, axiosErrorResponse.headers, axiosErrorResponse.data, error)
             resolve(errorResponse)

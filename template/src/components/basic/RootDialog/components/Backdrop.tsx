@@ -2,6 +2,8 @@
 import React, { Component } from 'react'
 import { Animated, StyleSheet, TouchableOpacity } from 'react-native'
 
+import { PressableOpacity } from '@/components/basic'
+
 import type { BackdropProps } from '../type'
 
 export default class Backdrop extends Component<BackdropProps> {
@@ -16,10 +18,7 @@ export default class Backdrop extends Component<BackdropProps> {
 
   componentDidUpdate(prevProps: BackdropProps) {
     const {
-      visible,
-      useNativeDriver,
-      opacity,
-      animationDuration: duration,
+      animationDuration: duration, opacity, useNativeDriver, visible,
     } = this.props
     if (prevProps.visible !== visible) {
       const toValue = visible ? opacity : 0
@@ -38,20 +37,20 @@ export default class Backdrop extends Component<BackdropProps> {
   opacity = new Animated.Value(0)
 
   render() {
-    const { onPress, pointerEvents, backgroundColor } = this.props
+    const { backgroundColor, onPress, pointerEvents } = this.props
     const { opacity } = this
 
     return (
       <Animated.View
         pointerEvents={pointerEvents}
-        style={StyleSheet.flatten([
+        style={[
           StyleSheet.absoluteFill, {
             backgroundColor,
             opacity,
           },
-        ])}
+        ]}
       >
-        <TouchableOpacity
+        <PressableOpacity
           onPress={onPress}
           style={StyleSheet.absoluteFill}
         />

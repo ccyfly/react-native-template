@@ -1,21 +1,38 @@
-import { CommonActions, createNavigationContainerRef } from '@react-navigation/native'
-import { Dimensions, Platform } from 'react-native'
+import {
+  CommonActions,
+  createNavigationContainerRef,
+  NavigationState,
+  PartialRoute,
+  PartialState,
+  Route,
+} from '@react-navigation/native'
+
+// import { NavigationState, PartialState, Route } from '@react-navigation/routers'
+import logger from '@/infrastructures/common/logger'
 
 import { RootStackNavigationParamList } from './types'
 
 export const navigationRef = createNavigationContainerRef<RootStackNavigationParamList>()
-
 export const navigate = (name: keyof RootStackNavigationParamList, params: any) => {
   if (navigationRef.isReady()) {
-    console.log('navigate navigationRef ready')
+    logger.log('navigate navigationRef ready')
     navigationRef.navigate(name, params)
   } else {
-    console.log('navigate navigationRef not ready')
+    logger.log('navigate navigationRef not ready')
   }
 }
 
-export const navigateAndReset = (routes = [], index = 0) => {
+type ResetState =
+  | PartialState<NavigationState<RootStackNavigationParamList>>
+  | NavigationState<RootStackNavigationParamList>
+  | (Omit<NavigationState<RootStackNavigationParamList>, 'routes'> & {
+    routes: Omit<Route<string>, 'key'>[]
+  })
+export type ResetRoutes = ResetState['routes']
+
+export const navigateAndReset = (routes: PartialRoute<Route<NavigationState<RootStackNavigationParamList>['routeNames'][number]>>[] | Omit<Route<string>, 'key'>[], index = 0) => {
   if (navigationRef.isReady()) {
+
     navigationRef.dispatch(
       CommonActions.reset({
         index,
@@ -25,7 +42,7 @@ export const navigateAndReset = (routes = [], index = 0) => {
   }
 }
 
-export const navigateAndSimpleReset = (name: string, index = 0) => {
+export const navigateAndSimpleReset = (name: string, params: any = {}, index = 0) => {
   if (navigationRef.isReady()) {
     navigationRef.dispatch(
       CommonActions.reset({
@@ -33,6 +50,7 @@ export const navigateAndSimpleReset = (name: string, index = 0) => {
         routes: [
           {
             name,
+            params,
           },
         ],
       }),
@@ -48,17 +66,3 @@ export const getCurrentRouteName = () => {
   return undefined
 }
 
-export const isIphoneX = () => {
-  const dimen = Dimensions.get('window')
-
-  return (
-    Platform.OS === 'ios' &&
-      !Platform.isPad &&
-      !Platform.isTVOS &&
-      ((dimen.height === 780 || dimen.width === 780)
-        || (dimen.height === 812 || dimen.width === 812)
-        || (dimen.height === 844 || dimen.width === 844)
-        || (dimen.height === 896 || dimen.width === 896)
-        || (dimen.height === 926 || dimen.width === 926))
-  )
-}

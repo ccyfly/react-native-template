@@ -10,11 +10,7 @@ type FadeAnimationConfig = AnimationConfig & {
 export default class FadeAnimation extends Animation {
   animationDuration: number
 
-  constructor({
-    initialValue = 0,
-    useNativeDriver = false,
-    animationDuration = 200,
-  }: FadeAnimationConfig = {}) {
+  constructor({ animationDuration = 200, initialValue = 0, useNativeDriver = false }: FadeAnimationConfig = {}) {
     super({
       initialValue,
       useNativeDriver,
@@ -39,8 +35,6 @@ export default class FadeAnimation extends Animation {
   }
 
   getAnimations(): Record<string, unknown> {
-    return {
-      opacity: this.animate,
-    }
+    return { opacity: this.animate }
   }
 }

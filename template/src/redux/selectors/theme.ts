@@ -1,23 +1,13 @@
 import { createSelector, Selector } from 'reselect'
 
-import { NonPersistState } from '@/redux/reducers/nonPersistSlice'
+import { SettingState } from '@/redux/reducers/settingSlice'
+import { ThemeState } from '@/redux/reducers/themeSlice'
 
 import { RootState } from '../store'
 
-export const selectState = (state: RootState): NonPersistState => state.nonPersist
+export const selectState = (state: RootState): ThemeState => state.theme
 
-export const selectLoading = createSelector<[Selector<RootState, NonPersistState>], boolean>(
+export const selectFontScale = createSelector(
   selectState,
-  (state: NonPersistState): boolean => {
-    const { loadingCount } = state
-
-    return loadingCount > 0
-  }
-)
-
-export const selectInitiated = createSelector<[Selector<RootState, NonPersistState>], boolean>(
-  selectState,
-  (state: NonPersistState): boolean => {
-    return state.initiated
-  }
+  (state: ThemeState) => state.fontScale
 )

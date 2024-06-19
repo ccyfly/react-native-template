@@ -2,7 +2,7 @@ import { DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultThem
 import merge from 'deepmerge'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useColorScheme } from 'react-native'
-import { adaptNavigationTheme, DefaultTheme as PaperDefaultTheme, MD3DarkTheme as PaperDarkTheme } from 'react-native-paper'
+import { adaptNavigationTheme, configureFonts, DefaultTheme as PaperDefaultTheme, MD3DarkTheme as PaperDarkTheme } from 'react-native-paper'
 import { useSelector } from 'react-redux'
 
 import { Locale } from '@/configs/constants/type'
@@ -20,60 +20,16 @@ import {
 import Icons from '@/theme/Icons'
 import {
   FontScale,
+  MD3Fonts,
   Theme,
   ThemeCommon,
+  ThemeFonts,
   ThemeNavigationColors,
+  ThemeNavigationFonts,
   ThemeNavigationTheme,
+  ThemeNavigationThemeWithOwn,
   ThemeVariables,
 } from '@/theme/types'
-
-/*
-const buildDefaultTheme = (currentTheme: string, darkMode: boolean) => {
-  const {
-    Variables: themeConfigVars = {} as Partial<ThemeVariables>,
-    ...themeConfig
-  } = themes[currentTheme] || {}
-
-  const {
-    Variables: darkThemeConfigVars = {} as Partial<ThemeVariables>,
-    ...darkThemeConfig
-  } = darkMode ? themes[`${currentTheme}_dark`] || {} : {}
-
-  const themeVariables: ThemeVariables = mergeVariables(
-    DefaultVariables as ThemeVariables,
-    themeConfigVars,
-    darkThemeConfigVars,
-  )
-
-  const defaultNavTheme = darkMode ? Object.assign(DarkTheme, PaperDarkTheme) : Object.assign(DefaultTheme, PaperDefaultTheme)
-
-  // Build the default theme
-  const baseTheme: Theme = {
-    Fonts: Fonts(themeVariables),
-    Icons: Icons(themeVariables),
-    Gutters: Gutters(themeVariables),
-    Images: Images(themeVariables),
-    Layout: Layout(themeVariables),
-    Common: Common({
-      ...themeVariables,
-      Layout: Layout(themeVariables),
-      Gutters: Gutters(themeVariables),
-      Fonts: Fonts(themeVariables),
-      Images: Images(themeVariables),
-    }) as ThemeCommon,
-    ...themeVariables,
-    darkMode: !!darkMode,
-    NavigationTheme: defaultNavTheme,
-  }
-
-  return buildTheme(
-    !!darkMode,
-    baseTheme,
-    formatTheme(themeVariables, themeConfig || {}),
-    formatTheme(themeVariables, darkThemeConfig || {}),
-  )
-}
-*/
 
 const { DarkTheme, LightTheme } = adaptNavigationTheme({
   reactNavigationLight: NavigationDefaultTheme,
@@ -94,6 +50,7 @@ const useBuildTheme = () => {
     (state: { theme: ThemeState }) => state.theme.darkMode,
   )
   const darkMode = useMemo(() => {
+    // use system color scheme if isDark is null
     return isDark === null ? colorScheme === 'dark' : isDark
   }, [colorScheme, isDark])
   const fontScaleType = useSelector(
@@ -128,9 +85,11 @@ const useBuildTheme = () => {
         Gutters: Gutters(themeVariables),
         Fonts: Fonts(themeVariables, fontScale),
         Images: Images(themeVariables),
-      }) as ThemeCommon,
+      }),
       ...themeVariables,
+      FontSize: themeVariables.ScaledFontSize[fontScale],
       darkMode: !!darkMode,
+      Param: themeVariables.Param,
       NavigationTheme: defaultNavTheme,
     }
 
@@ -141,15 +100,12 @@ const useBuildTheme = () => {
       formatTheme(themeVariables, themeConfig || {}),
       formatTheme(themeVariables, darkThemeConfig || {}),
     )
-  }, [
-    currentTheme, darkMode, fontScale,
-  ])
+  }, [currentTheme, darkMode, fontScale])
 
   return createTheme()
 }
 
 export default useBuildTheme
-
 
 const formatTheme = (
   variables: ThemeVariables,
@@ -212,6 +168,8 @@ const buildTheme = (
     NavigationTheme: mergeNavigationTheme(
       darkMode ? Object.assign(NavigationDarkTheme, PaperDarkTheme) : Object.assign(NavigationDefaultTheme, PaperDefaultTheme),
       baseTheme.Colors,
+      baseTheme.Fonts as any,
+      baseTheme.Param.roundness,
     ),
   }
 }
@@ -247,11 +205,23 @@ const mergeTheme = (
 const mergeNavigationTheme = (
   reactNavigationTheme: ThemeNavigationTheme,
   overrideColors: ThemeNavigationColors,
+  overrideFonts: ThemeNavigationFonts,
+  roundness: number,
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-) => ({
+): ThemeNavigationThemeWithOwn => ({
   ...reactNavigationTheme,
   colors: {
     ...reactNavigationTheme.colors,
     ...overrideColors,
   },
+  fonts: {
+    ...reactNavigationTheme.fonts,
+    ...configureFonts({
+      config: {
+        ...overrideFonts,
+      },
+    }),
+    ...overrideFonts,
+  },
+  roundness: roundness,
 })

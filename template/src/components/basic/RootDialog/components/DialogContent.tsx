@@ -9,22 +9,14 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
     paddingHorizontal: 18,
   },
-  noPaddingTop: {
-    paddingTop: 0,
-  },
+  noPaddingTop: { paddingTop: 0 },
 })
 
-const DialogContent = ({
-  style,
-  children,
-}: DialogContentProps) =>
+const DialogContent = ({ children, style }: DialogContentProps) =>
   (
     <DialogContext.Consumer>
       {({ hasTitle }) => (
-        <View style={[
-          styles.content, false && styles.noPaddingTop, style,
-        ]}
-        >
+        <View style={[styles.content, false && styles.noPaddingTop, style]}>
           {children}
         </View>
       )}

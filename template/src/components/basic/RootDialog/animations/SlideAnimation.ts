@@ -3,10 +3,7 @@ import { Animated, Dimensions } from 'react-native'
 
 import Animation, {  AnimationConfig } from './Animation'
 
-const {
-  width: SCREEN_WIDTH,
-  height: SCREEN_HEIGHT,
-} = Dimensions.get('window')
+const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get('window')
 
 type SlideFrom = 'top' | 'bottom' | 'left' | 'right'
 type SlideAnimationConfig = AnimationConfig & {
@@ -16,16 +13,12 @@ type SlideAnimationConfig = AnimationConfig & {
 export default class SlideAnimation extends Animation {
   slideFrom: SlideFrom
 
-  static SLIDE_FROM_TOP:string = 'top'
-  static SLIDE_FROM_BOTTOM:string = 'bottom'
-  static SLIDE_FROM_LEFT:string = 'left'
-  static SLIDE_FROM_RIGHT:string = 'right'
+  static SLIDE_FROM_TOP:SlideFrom = 'top'
+  static SLIDE_FROM_BOTTOM:SlideFrom = 'bottom'
+  static SLIDE_FROM_LEFT:SlideFrom = 'left'
+  static SLIDE_FROM_RIGHT:SlideFrom = 'right'
 
-  constructor({
-    initialValue = 0,
-    useNativeDriver = true,
-    slideFrom = SlideAnimation.SLIDE_FROM_BOTTOM,
-  }: SlideAnimationConfig = {}) {
+  constructor({ initialValue = 0, useNativeDriver = true, slideFrom = SlideAnimation.SLIDE_FROM_BOTTOM }: SlideAnimationConfig = {}) {
     super({
       initialValue,
       useNativeDriver,
@@ -91,8 +84,6 @@ export default class SlideAnimation extends Animation {
       `)
     }
 
-    return {
-      transform,
-    }
+    return { transform }
   }
 }

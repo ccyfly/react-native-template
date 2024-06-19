@@ -1,9 +1,10 @@
 import React from 'react'
 import { ActivityIndicator, ColorValue, View } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Modal, Text } from 'react-native-paper'
 import { useSelector } from 'react-redux'
 
 import useTheme from '@/hooks/useTheme'
+import { rgbToHex } from '@/infrastructures/common/colorUtils'
 import { selectLoading } from '@/redux/selectors/nonPersist'
 
 interface ILoadingOverlayProps {
@@ -16,15 +17,17 @@ interface ILoadingOverlayProps {
 }
 
 const LoadingOverlay: React.FC<ILoadingOverlayProps> = ({
-  backgroundColor = 'rgba(0,0,0,0.5)',
+  backgroundColor,
   indicatorColor = 'red',
   opacity = 0.5,
-  zIndex = 5,
   textColor = 'black',
   wording = 'Loading',
+  zIndex = 5,
 }: ILoadingOverlayProps) => {
   const loading = useSelector(selectLoading)
-  const { Layout, Gutters } = useTheme()
+  const { Colors, Gutters, Layout } = useTheme()
+
+  const { alpha, hex: backdropColor } = rgbToHex(Colors.backdrop, true)
 
   return (
     loading ? (
@@ -34,7 +37,7 @@ const LoadingOverlay: React.FC<ILoadingOverlayProps> = ({
         bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: backgroundColor,
+        backgroundColor: backgroundColor ? backgroundColor : backdropColor,
         opacity: opacity,
         zIndex: zIndex,
         flexDirection: 'column',

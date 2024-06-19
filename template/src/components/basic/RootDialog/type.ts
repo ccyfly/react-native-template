@@ -1,5 +1,7 @@
-import { ReactElement, ReactNode } from 'react'
+import { PropsWithChildren, ReactElement, ReactNode } from 'react'
 import { StyleProp, TextStyle, ViewStyle } from 'react-native'
+
+import { IButtonProps } from '@/components/basic/Button'
 
 import Animation from './animations/Animation'
 import DialogButton from './components/DialogButton'
@@ -20,7 +22,7 @@ export type DragEvent = {
   swipeDirection: string | null
 }
 
-export type DialogProps = {
+export type DialogProps = PropsWithChildren<{
   visible: boolean
   children: ReactElement<any>
   width?: number
@@ -49,7 +51,7 @@ export type DialogProps = {
   swipeThreshold?: number
   useNativeDriver?: boolean
   theme?: any
-}
+}>
 
 export type DialogFooterActionList = ReactElement<typeof DialogButton>[]
 
@@ -59,17 +61,21 @@ export type DialogFooterProps = {
   bordered?: boolean
 }
 
-export type DialogButtonProps = {
-  label: string
-  onPress: () => void
-  mode?: 'text' | 'outlined' | 'contained'
-  align?: 'center' | 'flex-start' | 'flex-end'
-  color?: string
-  contentStyle?: StyleProp<ViewStyle>
-  style?: StyleProp<ViewStyle>
-  labelStyle?: StyleProp<TextStyle>
-  disabled?: boolean
-  activeOpacity?: number
+// export type DialogButtonProps = {
+//   label: string
+//   onPress: () => void
+//   mode?: 'text' | 'outlined' | 'contained'
+//   align?: 'center' | 'flex-start' | 'flex-end'
+//   color?: string
+//   contentStyle?: StyleProp<ViewStyle>
+//   style?: StyleProp<ViewStyle>
+//   labelStyle?: StyleProp<TextStyle>
+//   disabled?: boolean
+//   activeOpacity?: number
+// }
+
+export type DialogButtonProps = IButtonProps & {
+  isCancel?: boolean
 }
 
 export type DialogTitleProps = {

@@ -6,7 +6,8 @@ import { ThemeImages, ThemeVariables } from '@/theme/types'
  * @return {*}
  */
 export default ({}: ThemeVariables): ThemeImages => {
-  return {
-    // logo: require('@/Assets/Images/TOM.png'),
-  }
+  // {
+  //   logo: require('@/Assets/Images/TOM.png'),
+  // }
+  return {}
 }

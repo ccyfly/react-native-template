@@ -10,10 +10,7 @@ export default class Animation {
   useNativeDriver: boolean
   animate: Animated.Value
 
-  constructor({
-    initialValue = 0,
-    useNativeDriver = true,
-  }: AnimationConfig = {}) {
+  constructor({ initialValue = 0, useNativeDriver = true }: AnimationConfig = {}) {
     this.animate = new Animated.Value(initialValue)
     this.useNativeDriver = useNativeDriver
   }

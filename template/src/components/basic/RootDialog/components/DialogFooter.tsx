@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Children, cloneElement } from 'react'
 import { PixelRatio, StyleSheet, View } from 'react-native'
 
 import type { DialogFooterProps } from '../type'
@@ -12,12 +12,10 @@ const styles = StyleSheet.create({
     height: 200,
     flexDirection: 'column',
   },
-  actionsHorizontal: {
-    flexDirection: 'row',
-  },
+  actionsHorizontal: { flexDirection: 'row' },
 })
 
-const DialogActionList = ({ style, children, bordered = true }: DialogFooterProps) => {
+const DialogActionList = ({ bordered = true, children, style }: DialogFooterProps) => {
   const containerStyle = children.length > 2
     ? styles.actionsVertical
     : styles.actionsHorizontal
@@ -29,16 +27,13 @@ const DialogActionList = ({ style, children, bordered = true }: DialogFooterProp
   // apply horizontal border if actions legnth is 2 & bordered is true
   // const content = children.length === 2
   //   ? Children.map(children, ((child, index) => cloneElement(child, {
-  //     // bordered: (1 % index === 0 && bordered),
+  //     bordered: (1 % index === 0 && bordered),
   //   })))
-  //   : children;
-  const content = children
+  //   : children
+  // const content = children
 
   return (
-    <View style={[
-      containerStyle, border, style,
-    ]}
-    >
+    <View style={[containerStyle, border, style]}>
       {children}
     </View>
   )

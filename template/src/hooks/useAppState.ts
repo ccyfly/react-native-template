@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { AppState, AppStateStatus } from 'react-native'
 
 type Setting = {
-  onChange: (newState: AppStateStatus) => void
-  onForeground: () => void
-  onBackground: () => void
+  onChange?: (newState: AppStateStatus) => void
+  onForeground?: () => void
+  onBackground?: () => void
 }
 
 const isValidFunction = (func: unknown) => {
@@ -12,7 +12,7 @@ const isValidFunction = (func: unknown) => {
 }
 
 const useAppState = (settings: Setting) => {
-  const { onBackground, onChange, onForeground } = settings
+  const { onBackground = () => {}, onChange = (value) => {}, onForeground = () => {} } = settings
   const [appState, setAppState] = useState<AppStateStatus>(AppState.currentState)
 
   useEffect(() => {
@@ -30,9 +30,7 @@ const useAppState = (settings: Setting) => {
     return () => unsub.remove()
   })
 
-  return {
-    appState,
-  }
+  return { appState }
 }
 
 export default useAppState

@@ -1,11 +1,26 @@
 {
   "app_name": "ProjectName",
-  "version": "版本: {{version_name}} (Build {{build}})",
   "button": {
-    "confirm": "確認",
     "cancel": "取消",
+    "choose": "選擇",
+    "confirm": "確認",
+    "done": "完成",
+    "edit": "修改",
+    "learn_more": "查看詳情",
     "ok": "好",
+    "redeem": "兌換",
+    "reset": "重設",
+    "retry": "重試",
+    "show_more": "顯示更多",
     "submit": "提交",
-    "choose": "選擇"
-  }
+    "save": "儲存"
+  },
+  "date_display": "{{year}}年{{month}}月{{day}}日",
+  "loading": "載入中...",
+  "placeholder": {
+    "search": "搜尋"
+  },
+  "version": "版本",
+  "version_string": "{{version_name}}",
+  "version_stringb": "{{version_name}} (Build {{build}})"
 }

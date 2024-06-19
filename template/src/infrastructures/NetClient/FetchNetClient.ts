@@ -1,4 +1,4 @@
-import * as logger from '../common/logger'
+import logger from '../common/logger'
 import Timeout from '../common/Timeout'
 import AbstractClient from './AbstractClient'
 import APIResponse from './ApiResponse'
@@ -20,18 +20,14 @@ export default class FetchNetClient extends AbstractClient<IFetchNetClientInstan
   private _headersToRecord = (headers: Headers) => {
     const result:Record<string, string> = {}
     headers.forEach((k: string, v: string) => {
-      Object.assign(result, {
-        [k]: v,
-      })
+      Object.assign(result, { [k]: v })
     })
 
     return result
   }
 
   private _fetchWithTimeout = async (path: string, options: RequestInit, timeout = API.Timeout): Promise<Response> => {
-    const timeoutObj = new Timeout<Response>({
-      ms: timeout,
-    })
+    const timeoutObj = new Timeout<Response>({ ms: timeout })
 
     return new Promise((resolve, reject) => {
 
@@ -43,7 +39,6 @@ export default class FetchNetClient extends AbstractClient<IFetchNetClientInstan
         .then((success: Response) => {
           timeoutObj.clear()
           // handle response
-          // console.log('fetchWithTimeout success: ', success);
           resolve(success)
         }, (error: any) => {
           timeoutObj.clear()

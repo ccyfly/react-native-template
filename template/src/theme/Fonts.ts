@@ -1,38 +1,46 @@
 /**
  * This file contains all application's style relative to fonts
  */
-import { StyleSheet, TextStyle } from 'react-native'
-import { material } from 'react-native-typography'
+import { StyleSheet } from 'react-native'
 
+import logger from '@/infrastructures/common/logger'
 import {
   FontScale,
+  MD3Fonts,
   StyleType,
   ThemeFonts,
   ThemeFontSize,
   ThemeVariables,
 } from '@/theme/types'
+import { normalize } from '@/utils'
 
-const titleFontStyle = material.titleObject
-const bodyFontStyle = material.body1Object
-const buttonFontStyle = material.buttonObject
-
-export type Fonts = {
-  text: StyleType
-  buttonText: StyleType
-  primaryButtonText: StyleType
-  outlineButtonText: StyleType
-  secondaryButtonText: StyleType
-  title: StyleType
-}
+type FontWithSizeName = 'text' | 'buttonText' | 'textInput'
+export type FontWithSize = {[key in FontWithSizeName]: StyleType}
 export type FontAlign = {
   textCenter: StyleType
+  textVCenter: StyleType
   textJustify: StyleType
   textLeft: StyleType
   textRight: StyleType
 }
 
+export type MD3FontType = {
+  display: StyleType
+  headline: StyleType
+  title: StyleType
+  label: StyleType
+  body: StyleType
+}
+
+type CustomFontName =
+  'textShadow'|
+  'settingText'
+
+type CustomFontType = {[key in CustomFontName]: StyleType}
+export type FontType = MD3FontType & CustomFontType
+
 export type MergeThemeFonts = ThemeFonts & {
-  titleFontStyle: TextStyle
+  // titleFontStyle: TextStyle
 }
 
 /**
@@ -43,14 +51,79 @@ export type MergeThemeFonts = ThemeFonts & {
  */
 export default  ({ Colors: colors, ScaledFontSize: scaledFontSize }: ThemeVariables, fontScale: FontScale): MergeThemeFonts => {
   const fontSize = scaledFontSize[fontScale]
-  const styles = StyleSheet.create<ThemeFonts & FontAlign>({
+  const md3Fonts: MD3Fonts = {
+    displaySmall: {
+      fontSize: scaledFontSize[FontScale.SMALL].xxlarge,
+      letterSpacing: 0,
+      lineHeight: 44,
+    },
+    displayMedium: {
+      fontSize: scaledFontSize[FontScale.MEDIUM].xxlarge,
+      letterSpacing: 0,
+      lineHeight: 52,
+    },
+    displayLarge: {
+      fontSize: scaledFontSize[FontScale.LARGE].xxlarge,
+      letterSpacing: 0,
+      lineHeight: 64,
+    },
+    headlineSmall: {
+      fontSize: scaledFontSize[FontScale.SMALL].xlarge,
+      letterSpacing: 0,
+      fontWeight: '400',
+      lineHeight: 32,
+    },
+    headlineMedium: {
+      fontSize: scaledFontSize[FontScale.MEDIUM].xlarge,
+      fontWeight: '400',
+      letterSpacing: 0,
+      lineHeight: 36,
+    },
+    headlineLarge: {
+      fontSize: scaledFontSize[FontScale.LARGE].xlarge,
+      fontWeight: '400',
+      letterSpacing: 0,
+      lineHeight: 44,
+    },
+    titleSmall: { fontSize: scaledFontSize[FontScale.SMALL].large, fontWeight: 'bold' },
+    titleMedium: { fontSize: scaledFontSize[FontScale.MEDIUM].large, fontWeight: 'bold' },
+    titleLarge: { fontSize: scaledFontSize[FontScale.LARGE].large, fontWeight: 'bold' },
+    labelSmall: { fontSize: scaledFontSize[FontScale.SMALL].small },
+    labelMedium: { fontSize: scaledFontSize[FontScale.MEDIUM].small },
+    labelLarge: { fontSize: scaledFontSize[FontScale.LARGE].small },
+    bodySmall: { fontSize: scaledFontSize[FontScale.SMALL].medium },
+    bodyMedium: { fontSize: normalize(scaledFontSize[FontScale.MEDIUM].medium) },
+    bodyLarge: { fontSize: scaledFontSize[FontScale.LARGE].medium },
+    default: { fontSize: scaledFontSize[FontScale.MEDIUM].medium },
+  }
 
+  return StyleSheet.create<ThemeFonts & FontAlign & MD3Fonts>({
+    display: {
+      fontSize: fontSize.xxlarge,
+      fontWeight: '400',
+    },
+    headline: {
+      fontSize: fontSize.xlarge,
+      fontWeight: '400',
+    },
+    title: {
+      fontSize: fontSize.large,
+      fontWeight: '500',
+    },
+    label: {
+      fontSize: fontSize.small,
+      fontWeight: '500',
+    },
+    body: {
+      fontSize: fontSize.medium,
+      fontWeight: '400',
+    },
     textSmall: {
       fontSize: fontSize.small,
       color: colors.text,
     },
-    textRegular: {
-      fontSize: fontSize.regular,
+    textMedium: {
+      fontSize: fontSize.medium,
       color: colors.text,
     },
     textLarge: {
@@ -61,107 +134,63 @@ export default  ({ Colors: colors, ScaledFontSize: scaledFontSize }: ThemeVariab
       fontSize: fontSize.xlarge,
       color: colors.text,
     },
-    buttonTextSmall: {
-      fontSize: fontSize.small,
+    textXxlarge: {
+      fontSize: fontSize.xxlarge,
       color: colors.text,
     },
-    buttonTextRegular: {
-      fontSize: fontSize.regular,
-      color: colors.text,
+    buttonTextSmall: {
+      fontSize: fontSize.small,
+    },
+    buttonTextMedium: {
+      fontSize: fontSize.medium,
     },
     buttonTextLarge: {
       fontSize: fontSize.large,
-      color: colors.text,
     },
     buttonTextXlarge: {
       fontSize: fontSize.xlarge,
-      color: colors.text,
     },
-    primaryButtonTextSmall: {
-      fontSize: fontSize.small,
-      color: colors.onPrimary,
+    buttonTextXxlarge: {
+      fontSize: fontSize.xxlarge,
     },
-    primaryButtonTextRegular: {
-      fontSize: fontSize.regular,
-      color: colors.onPrimary,
+    textInputSmall: {
+      fontSize: fontSize.small - 2,
     },
-    primaryButtonTextLarge: {
-      fontSize: fontSize.large,
-      color: colors.onPrimary,
+    textInputMedium: {
+      fontSize: fontSize.medium - 2,
     },
-    primaryButtonTextXlarge: {
-      fontSize: fontSize.xlarge,
-      color: colors.onPrimary,
+    textInputLarge: {
+      fontSize: fontSize.large - 2,
     },
-    secondaryButtonTextSmall: {
-      fontSize: fontSize.small,
-      color: colors.onSecondary,
+    textInputXlarge: {
+      fontSize: fontSize.xlarge - 2,
     },
-    secondaryButtonTextRegular: {
-      fontSize: fontSize.regular,
-      color: colors.onSecondary,
+    textInputXxlarge: {
+      fontSize: fontSize.xxlarge - 2,
     },
-    secondaryButtonTextLarge: {
-      fontSize: fontSize.large,
-      color: colors.onSecondary,
+    textCenter: { textAlign: 'center' },
+    textVCenter: { textAlignVertical: 'center' },
+    textJustify: { textAlign: 'justify' },
+    textLeft: { textAlign: 'left' },
+    textRight: { textAlign: 'right' },
+    ...md3Fonts,
+
+    // Custom Font
+    textShadow: {
+      color: '#fff',
+      textShadowColor: 'rgba(0, 0, 0, 0.75)',
+      textShadowOffset: { width: 1, height: 1 },
+      textShadowRadius: 2,
     },
-    secondaryButtonTextXlarge: {
-      fontSize: fontSize.xlarge,
-      color: colors.onSecondary,
-    },
-    outlineButtonTextSmall: {
-      fontSize: fontSize.small,
-      color: colors.onSurface,
-    },
-    outlineButtonTextRegular: {
-      fontSize: fontSize.regular,
-      color: colors.onSurface,
-    },
-    outlineButtonTextLarge: {
-      fontSize: fontSize.large,
-      color: colors.onSurface,
-    },
-    outlineButtonTextXlarge: {
-      fontSize: fontSize.xlarge,
-      color: colors.onSurface,
-    },
-    titleSmall: {
-      fontSize: fontSize.small * 2,
-      fontWeight: 'bold',
-      color: colors.text,
-    },
-    titleRegular: {
-      fontSize: fontSize.regular * 2,
-      fontWeight: 'bold',
-      color: colors.text,
-    },
-    titleLarge: {
-      fontSize: fontSize.large * 2,
-      fontWeight: 'bold',
-      color: colors.text,
-    },
-    titleXlarge: {
-      fontSize: fontSize.xlarge * 2,
-      fontWeight: 'bold',
-      color: colors.text,
-    },
-    textCenter: {
-      textAlign: 'center',
-    },
-    textJustify: {
-      textAlign: 'justify',
-    },
-    textLeft: {
-      textAlign: 'left',
-    },
-    textRight: {
-      textAlign: 'right',
+    settingText: {
+      fontSize: normalize(20),
+      fontWeight: '600',
     },
   })
 
-  return Object.assign(styles, {
-    bodyFontStyle,
-    buttonFontStyle,
-    titleFontStyle,
-  }) as MergeThemeFonts
+  // return Object.assign(styles, {
+  //   bodyFontStyle,
+  //   buttonFontStyle,
+  //   titleFontStyle,
+  // }) as MergeThemeFonts
 }

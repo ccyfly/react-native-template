@@ -1,63 +1,52 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { Route, useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import React, { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { useDispatch, useSelector } from 'react-redux'
+import useState from 'react-usestateref'
 
 import useTheme from '@/hooks/useTheme'
+import logger from '@/infrastructures/common/logger'
 import Timeout from '@/infrastructures/common/Timeout'
+import { RootScreenNavigationProp } from '@/navigators/props'
 import { AppRoutes } from '@/navigators/types'
 import { navigateAndSimpleReset } from '@/navigators/utils'
 import { setDefaultTheme } from '@/redux/reducers/themeSlice'
-import { selectInitiated } from '@/redux/selectors/nonPersist'
+import { useAppDispatch } from '@/redux/store'
+import { FontScale } from '@/theme/types'
 
 const SplashScreen = () => {
-  const { Colors, Layout } = useTheme()
+  const navigation = useNavigation<RootScreenNavigationProp>()
   const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const initiated = useSelector(selectInitiated)
+  const dispatch = useAppDispatch()
   const [timeout, setTimeout] = useState(false)
 
-  const navigateToMain = useCallback(() => {
-    console.log('navigateToMain initiated', initiated)
-    console.log('navigateToMain timeout', timeout)
-    if (initiated && timeout) {
-      navigateAndSimpleReset(AppRoutes.HomeScreen)
-    }
-  }, [initiated, timeout])
+  useEffect(() => {
+    init()
+  }, [])
 
   const init = () => {
     dispatch(setDefaultTheme({
       theme: 'default',
       darkMode: null,
+      fontScale: FontScale.MEDIUM,
     }))
 
-    const to = new Timeout({
-      ms: 3000,
-    })
+    const to = new Timeout({ ms: 3000 })
     to.start().catch(() => {
       setTimeout(true)
     })
   }
 
   useEffect(() => {
-    init()
-  }, [])
-
-  useEffect(() => {
-    navigateToMain()
-  }, [initiated, timeout])
+    // init whether completed
+    if (timeout) {
+      // Navigate to Main Drawer
+      navigateAndSimpleReset(AppRoutes.MainDrawerNav)
+    }
+  }, [timeout])
 
   return (
-    <SafeAreaView style={[Layout.fill, Layout.colCenter]}>
-      <Text
-        style={{
-          color: Colors.text,
-        }}
-      >
-        {t('general:app_name')}
-      </Text>
-    </SafeAreaView>
+    <></>
   )
 }
 
