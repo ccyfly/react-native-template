@@ -10,8 +10,8 @@ import { ITypedMap } from '@/models'
 
 import APIResponse from '../NetClient/ApiResponse'
 
-const log = (message?: any, ...para:any[]) => {
-  if (REACT_APP_DEBUG) {
+const log = (message?: any, ...para: any[]) => {
+  if (REACT_APP_DEBUG === 'true') {
     if (para === undefined || para === null || para.length === 0) {
       console.log(`${clc.greenBright(message)}`)
     } else if (para && para.length === 1) {
@@ -21,8 +21,8 @@ const log = (message?: any, ...para:any[]) => {
     }
   }
 }
-const debug = (message?: any, ...para:any[]): void => {
-  if (REACT_APP_DEBUG) {
+const debug = (message?: any, ...para: any[]): void => {
+  if (REACT_APP_DEBUG === 'true') {
     if (para === undefined || para === null || para.length === 0) {
       console.debug(`${clc.green(message)}`)
     } else if (para && para.length === 1) {
@@ -33,15 +33,15 @@ const debug = (message?: any, ...para:any[]): void => {
   }
 }
 const info = (message: string): void => {
-  if (REACT_APP_DEBUG) console.log(clc.greenBright(message))
+  if (REACT_APP_DEBUG === 'true') console.log(clc.greenBright(message))
 }
 
 const warn = (message: string): void => {
-  if (REACT_APP_DEBUG) console.log(clc.yellow(message))
+  if (REACT_APP_DEBUG === 'true') console.log(clc.yellow(message))
 }
 
 const error = (message: string, errorObj?: any): void => {
-  if (REACT_APP_DEBUG) {
+  if (REACT_APP_DEBUG === 'true') {
     console.log(clc.red(message))
     if (errorObj) {
       console.log(errorObj)
@@ -50,7 +50,7 @@ const error = (message: string, errorObj?: any): void => {
 }
 
 const request = (method: string, headerParams: Record<string, unknown>, url: string, formBody?: string): void => {
-  if (REACT_APP_DEBUG) {
+  if (REACT_APP_DEBUG === 'true') {
     const bodyString = method !== 'GET' ? `${clc.greenBright('\nRequest [Body]')}${!formBody ? clc.greenBright('  <Empty>') : clc.greenBright(`\n${JSON.stringify(JSON.parse(formBody), [''], 2)}`)}` : ''
     const requestSymbol = `${clc.greenBright('Request ==> ')}`
 
@@ -64,8 +64,8 @@ ${clc.blackBright('\n===========================================================
   }
 }
 
-const resp = (response: Response| AxiosResponse| ApiResponse<any>): void => {
-  if (REACT_APP_DEBUG) {
+const resp = (response: Response | AxiosResponse | ApiResponse<any>): void => {
+  if (REACT_APP_DEBUG === 'true') {
     const responseSymbol = `${clc.greenBright('<== Response ')}`
 
     const url = response instanceof Response ? response.url : response.config?.url
@@ -82,7 +82,7 @@ ${clc.blackBright('=============================================================
 }
 
 const responseBody = (respBody: Record<string, unknown>): void => {
-  if (REACT_APP_DEBUG) {
+  if (REACT_APP_DEBUG === 'true') {
     console.log(`\n
 ${clc.greenBright('Response [Body]:')}
 ${clc.greenBright(JSON.stringify(respBody, null, 2))} \n
@@ -91,8 +91,8 @@ ${clc.blackBright('=============================================================
   }
 }
 
-const object = (message: string, obj: Record<string, unknown>|ITypedMap<any>): void => {
-  if (REACT_APP_DEBUG) {
+const object = (message: string, obj: Record<string, unknown> | ITypedMap<any>): void => {
+  if (REACT_APP_DEBUG === 'true') {
     console.log(`\n
   ${clc.blackBright('=============================< ')}${message}${(clc.blackBright('>=================================\n'))}
 ${clc.greenBright(JSON.stringify(obj, null, 2))} \n

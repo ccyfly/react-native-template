@@ -23,7 +23,7 @@ const BackButton: FunctionComponent<IBackButtonProps> = ({ color, onPress }: IBa
       style={[]}
     >
       <IconX
-        origin={IconX.MATERIAL_ICONS}
+        origin={IconX.MATERIAL_DESIGN_ICONS}
         name={'arrow-back-ios'}
         color={color ? color : onPrimary}
         size={32}

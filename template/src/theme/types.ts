@@ -8,6 +8,8 @@ import { ILayout } from '@/theme/Layout'
 
 import { Colors, ownColor } from './Variables'
 
+type Overwrite<T, NewT> = Omit<T, keyof NewT> & NewT
+
 type MergeStyleKeys<A, B, C = StyleType> = { [P in
   `${Exclude<keyof A, symbol>}${Exclude<Capitalize<string & keyof B>, symbol>}`
   ]: C; }
@@ -37,11 +39,14 @@ export type StyleType = TextStyle & ViewStyle & ImageStyle
 type NavigationColors = NavigationThemeType['colors']
 type PaperColors = PaperThemeType['colors']
 type OwnColors = typeof ownColor
-export type ThemeNavigationColors = PaperColors & NavigationColors & OwnColors
+type TColors = Overwrite<Overwrite<NavigationColors, PaperColors>, OwnColors>
+export type ThemeNavigationColors = TColors // PaperColors & NavigationColors & OwnColors
 export type ThemeNavigationFonts = PaperThemeType['fonts']
 
-export type ThemeNavigationTheme = NavigationThemeType & PaperThemeType
-export type ThemeNavigationThemeWithOwn = ThemeNavigationTheme & { colors: OwnColors }
+type TNavigationTheme = Overwrite<NavigationThemeType, PaperThemeType>
+export type ThemeNavigationTheme = TNavigationTheme // NavigationThemeType & PaperThemeType
+export type ThemeNavigationThemeWithOwn = Overwrite<ThemeNavigationTheme, { colors: TColors }> // ThemeNavigationTheme & { colors: OwnColors }
+export type CustomPaperThemeType = Overwrite<PaperThemeType, { colors: TColors }>
 
 type MD3FontSizeKey = 'small' | 'medium' | 'large'
 type FontSizeKey = MD3FontSizeKey | 'xlarge' | 'xxlarge'
@@ -87,7 +92,7 @@ export type ThemeLayout<T> = {
 }
 export type ThemeGutters = MergeStyleKeys<ThemeMetricsSizes, GutterType>
 
-type ButtonType = 'base'|'rounded'|'outline'|'contentIconOnly'|'content' // |'outlineRounded'|'baseSecondary'|'roundedSecondary'|'outlineSecondary'|'outlineRoundedSecondary'
+type ButtonType = 'base' | 'rounded' | 'outline' | 'contentIconOnly' | 'content' // |'outlineRounded'|'baseSecondary'|'roundedSecondary'|'outlineSecondary'|'outlineRoundedSecondary'
 export type ButtonsStyle = { [key in ButtonType]: StyleType }
 export type ThemeCommon = {
   // [key: string]: StyleType
@@ -109,7 +114,8 @@ export type Theme = {
   Gutters: ThemeGutters
   Common: ThemeCommon
   Variables?: Partial<ThemeVariables>
-  NavigationTheme: ThemeNavigationTheme
+  NavigationTheme: NavigationThemeType
+  PaperTheme: CustomPaperThemeType
   darkMode: boolean
   Param: ThemeParam
 }

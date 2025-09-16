@@ -37,7 +37,7 @@ const PickerItem = (props: PickerItemProps) => {
 
   const selectedIndicator = useMemo(() => {
     if (isSelected) {
-      return <IconX origin={IconX.MATERIAL_ICONS} name={'check'} size={20} color={Colors.primary} />
+      return <IconX origin={IconX.MATERIAL_DESIGN_ICONS} name={'check'} size={20} color={Colors.primary} />
     }
   }, [isSelected, isItemDisabled, selectedIcon, selectedIconColor])
 
@@ -71,7 +71,7 @@ const PickerItem = (props: PickerItemProps) => {
       onLayout={isSelected ? onSelectedLayout : undefined}
       disabled={isItemDisabled}
       testID={testID}
-      // throttleTime={0}
+    // throttleTime={0}
     >
       {customRenderItem ? customRenderItem(value, { ...props, isSelected, isItemDisabled }, itemLabel) : _renderItem()}
     </PressableOpacity>

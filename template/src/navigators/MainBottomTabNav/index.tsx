@@ -22,7 +22,7 @@ const MainBottomTabNav = () => {
 
   const renderTabIcon = useCallback((iconName: string) => {
     const renderNamedTabIcon = ({ color, focused }: { color?: string; focused: boolean }) => {
-      return <IconX origin={IconX.ANT_ICON} name={iconName} size={30} color={color}/>
+      return <IconX origin={IconX.ANT_DESIGN} name={iconName} size={30} color={color} />
     }
 
     return renderNamedTabIcon
@@ -37,12 +37,13 @@ const MainBottomTabNav = () => {
         tabBarActiveTintColor: Colors.primary,
         tabBarBackground: () => {
           return (
-            <LinearGradient colors={[
-              '#E8E8E8', '#E8E8E8', '#fff', '#fff', '#FAFAFA', '#E8E8E8',
-            ]}
-            start={{ x: 0.0, y: 1.0 }}
-            end={{ x: 0.0, y: 0.0 }}
-            style={{ height: tabBarHeight }}
+            <LinearGradient
+              colors={[
+                '#E8E8E8', '#E8E8E8', '#fff', '#fff', '#FAFAFA', '#E8E8E8',
+              ]}
+              start={{ x: 0.0, y: 1.0 }}
+              end={{ x: 0.0, y: 0.0 }}
+              style={{ height: tabBarHeight }}
             />
           )
         },

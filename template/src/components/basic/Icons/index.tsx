@@ -1,39 +1,43 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-duplicate-type-constituents */
+import { AntDesign } from '@react-native-vector-icons/ant-design'
+import { EvilIcons } from '@react-native-vector-icons/evil-icons'
+import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6'
+import { Ionicons } from '@react-native-vector-icons/ionicons'
+import { Lucide } from '@react-native-vector-icons/lucide'
+import { MaterialDesignIcons } from '@react-native-vector-icons/material-design-icons'
 import React from 'react'
 import { StyleProp, StyleSheet, TextStyle, ViewStyle } from 'react-native'
 import { createIconSetFromFontello, createIconSetFromIcoMoon } from 'react-native-vector-icons'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import Entypo from 'react-native-vector-icons/Entypo'
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
-import Feather from 'react-native-vector-icons/Feather'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import Octicons from 'react-native-vector-icons/Octicons'
+// import AntDesign from 'react-native-vector-icons/AntDesign'
+// import Entypo from 'react-native-vector-icons/Entypo'
+// import EvilIcons from 'react-native-vector-icons/EvilIcons'
+// import Feather from 'react-native-vector-icons/Feather'
+// import FontAwesome from 'react-native-vector-icons/FontAwesome'
+// import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+// import Ionicons from 'react-native-vector-icons/Ionicons'
+// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+// import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+// import Octicons from 'react-native-vector-icons/Octicons'
 
 // import fontelloConfig from '@/assets/fonts/config.json'
 // const MyIcon = createIconSetFromFontello(fontelloConfig, 'myicon')
 
 const IconType = {
-  ICONICONS: 'ionicons',
-  ANT_ICON: 'ant',
-  EVIL_ICONS: 'EVIL',
-  FONT_AWESOME: 'FONTAWESOME',
-  FONT_AWESOME5: 'fontawwesome5',
-  MATERIAL_ICONS: 'MaterialIcons',
-  FEATHER_ICONS: 'FEATHER',
-  ENTYPO: 'ENTYPO',
-  OCTICONS: 'OCTICONS',
-  MATERIAL_COMMUNITY: 'MATERIALCOMMUNITY',
+  ANT_DESIGN: 'ANT_DESIGN',
+  EVIL_ICONS: 'EVIL_ICONS',
+  FONT_AWESOME6: 'FONTAWESOME6',
+  IONICONS: 'IONICONS',
+  LUCIDE: 'LUCIDE',
+  MATERIAL_DESIGN_ICONS: 'MATERIAL_DESIGN_ICONS',
+
+  // OCTICONS: 'octicons',
   // MY_ICON: 'myicon',
 }
 type IconType = typeof IconType[keyof typeof IconType]
 interface IIconXProps {
   origin: IconType
-  name: string
+  name: any
   color?: string
   size?: number
   paddingLeft?: number
@@ -43,14 +47,11 @@ interface IIconXProps {
 }
 
 type IconXType = typeof AntDesign |
-  typeof Entypo |
   typeof Ionicons |
-  typeof MaterialIcons |
-  typeof FontAwesome5 |
-  typeof Feather |
-  typeof FontAwesome |
-  typeof EvilIcons |
-  typeof MaterialCommunityIcons
+  typeof MaterialDesignIcons |
+  typeof FontAwesome6 |
+  typeof Lucide |
+  typeof EvilIcons
 
 type IPanel<P> = React.FunctionComponent<P> & typeof IconType
 
@@ -71,48 +72,41 @@ const IconX: IPanel<IIconXProps> = ({
   let Element: IconXType = Ionicons
 
   switch (origin) {
-    case IconType.ANT_ICON:
+    case IconType.ANT_DESIGN:
       Element = AntDesign
-      break
-
-    case IconType.ENTYPO:
-      Element = Entypo
-      break
-
-    case IconType.MATERIAL_ICONS:
-      Element = MaterialIcons
-      break
-
-    case IconType.FONT_AWESOME5:
-      Element = FontAwesome5
-      break
-
-    case IconType.FEATHER_ICONS:
-      Element = Feather
       break
 
     case IconType.EVIL_ICONS:
       Element = EvilIcons
       break
 
-    case IconType.FONT_AWESOME:
-      Element = FontAwesome
+    case IconType.FONT_AWESOME6:
+      Element = FontAwesome6
       break
 
-    case IconType.OCTICONS:
-      Element = Octicons
+    case IconType.IONICONS:
+      Element = Ionicons
       break
-    case IconType.MATERIAL_COMMUNITY:
-      Element = MaterialCommunityIcons
+
+    case IconType.LUCIDE:
+      Element = Lucide
       break
-      // case IconType.MY_ICON:
-      //   Element = MyIcon
-      //   break
+
+    case IconType.MATERIAL_DESIGN_ICONS:
+      Element = MaterialDesignIcons
+      break
 
     default:
       Element = Ionicons
       break
   }
+
+
+  /*
+  case IconType.MY_ICON:
+    Element = MyIcon
+    break
+  */
 
   return (
     <Element
@@ -125,16 +119,12 @@ const IconX: IPanel<IIconXProps> = ({
     />
   )
 }
-IconX.ANT_ICON = IconType.ANT_ICON
-IconX.ENTYPO = IconType.ENTYPO
+IconX.ANT_DESIGN = IconType.ANT_DESIGN
 IconX.EVIL_ICONS = IconType.EVIL_ICONS
-IconX.FEATHER_ICONS = IconType.FEATHER_ICONS
-IconX.FONT_AWESOME = IconType.FONT_AWESOME
-IconX.FONT_AWESOME5 = IconType.FONT_AWESOME5
-IconX.ICONICONS = IconType.ICONICONS
-IconX.MATERIAL_COMMUNITY = IconType.MATERIAL_COMMUNITY
-IconX.MATERIAL_ICONS = IconType.MATERIAL_ICONS
-IconX.OCTICONS = IconType.OCTICONS
+IconX.FONT_AWESOME6 = IconType.FONT_AWESOME6
+IconX.IONICONS = IconType.IONICONS
+IconX.LUCIDE = IconType.LUCIDE
+IconX.MATERIAL_DESIGN_ICONS = IconType.MATERIAL_DESIGN_ICONS
 // IconX.MY_ICON = IconType.MY_ICON
 
 export default IconX

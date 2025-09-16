@@ -19,4 +19,11 @@ class MainActivity : ReactActivity() {
    */
   override fun createReactActivityDelegate(): ReactActivityDelegate =
       DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+
+  /**
+   * For react-navigation
+   */
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(null)
+  }
 }

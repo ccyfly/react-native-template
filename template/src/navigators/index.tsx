@@ -1,5 +1,5 @@
 import { useBackHandler } from '@react-native-community/hooks'
-import { NavigationContainer, useFocusEffect } from '@react-navigation/native'
+import { NavigationContainer, Theme as NavigationThemeType } from '@react-navigation/native'
 import React, { FunctionComponent, useCallback } from 'react'
 import { BackHandler, StatusBar } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -13,7 +13,7 @@ import RootStack from './RootStack'
 import { navigationRef } from './utils'
 
 interface IAppContainerProps {
-  theme: ThemeNavigationTheme
+  theme: NavigationThemeType
 }
 const AppNavigationContainer: FunctionComponent<IAppContainerProps> = ({ theme }: IAppContainerProps) => {
   const { Colors, darkMode } = useTheme()

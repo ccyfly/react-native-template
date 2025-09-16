@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Theme } from '@/theme/types'
 
 import * as default_dark from './default_dark'

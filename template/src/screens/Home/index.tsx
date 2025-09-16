@@ -1,5 +1,6 @@
+import { REACT_APP_DEBUG } from '@env'
 import React from 'react'
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 import { TextInput } from 'react-native-paper'
 
 import {
@@ -10,13 +11,25 @@ import {
   IconX,
   MaterialTextInput,
 } from '@/components/basic'
+import logger from '@/infrastructures/common/logger'
+import { EncryptHelper } from '@/utils/encrypt-helper'
 
 const HomeScreen = () => {
+
+  const test = async () => {
+    logger.log('test start')
+    const result = await EncryptHelper.encryptData('test')
+    logger.log('test end result', result)
+  }
+
+  void test()
+
   return (
     <Container insetTop>
       <Body>
+        <Button type="text" icon={<IconX origin={IconX.IONICONS} name="home" />} text="Login" />
         <Content tPadding={'tiny'}>
-          <IconX origin={IconX.ANT_ICON} name="home" />
+          <IconX origin={IconX.ANT_DESIGN} name="home" />
         </Content>
         <Content tPadding={'small'}>
           <View
@@ -38,15 +51,15 @@ const HomeScreen = () => {
           <View
             style={{
               width: '100%',
-              backgroundColor: 'yellow',
             }}
           >
             <MaterialTextInput
               style={{
-                backgroundColor: 'green',
+                // backgroundColor: 'green',
               }}
               secureTextEntry
               showEye
+              textContentType="password"
             />
           </View>
         </Content>
@@ -56,7 +69,7 @@ const HomeScreen = () => {
         <Content tPadding={'tiny'}>
           <Button
             type="icon"
-            icon={<IconX origin={IconX.ANT_ICON} name="home" />}
+            icon={<IconX origin={IconX.IONICONS} name="send" />}
           />
         </Content>
       </Body>

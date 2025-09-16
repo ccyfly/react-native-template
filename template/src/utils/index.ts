@@ -1,6 +1,4 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import CryptoES from 'crypto-es'
 import { Dimensions, PixelRatio, Platform } from 'react-native'
 
 import logger from '@/infrastructures/common/logger'
@@ -24,28 +22,6 @@ const scale = windowWidth / 428
 
 logger.log('width', { windowWidth, screenWidth })
 logger.log('scale', scale)
-
-const _key = CryptoES.enc.Utf8.parse('HSq8IRVejTpF2uhP')
-const iv = CryptoES.enc.Utf8.parse('AzaTjyc2m7tKliE9')
-
-const getS = () => {
-  const t = new Date().getTime()
-  const i = Math.floor(Math.random() * 1000000)
-  const m = `noncr=${i}&timestamp=${t}`
-  const e = CryptoES.AES.encrypt(m, _key, { iv, mode: CryptoES.mode.CBC, padding: CryptoES.pad.ZeroPadding }).toString()
-  // logger.debug('getS', {
-  //   iv: i,
-  //   t,
-  //   m,
-  //   e,
-  // })
-
-  return {
-    noncr: i,
-    timestamp: t,
-    sign: e,
-  }
-}
 
 const isSmallDevice = () => {
   return screenWidth <= 390
@@ -90,7 +66,6 @@ const cleanUnderscoreProps = (obj: any): any => {
 
 export {
   cleanUnderscoreProps,
-  getS,
   isIOS,
   isIphoneX,
   isSmallDevice,

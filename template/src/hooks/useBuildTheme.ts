@@ -1,4 +1,4 @@
-import { DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native'
+import { DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme, Theme as NavigationThemeType } from '@react-navigation/native'
 import merge from 'deepmerge'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useColorScheme } from 'react-native'
@@ -19,6 +19,7 @@ import {
 } from '@/theme'
 import Icons from '@/theme/Icons'
 import {
+  CustomPaperThemeType,
   FontScale,
   MD3Fonts,
   Theme,
@@ -58,7 +59,7 @@ const useBuildTheme = () => {
   )
   const fontScale = FontScale[fontScaleType || 'MEDIUM']
 
-  const createTheme = useCallback(() => {
+  const createTheme = useCallback((): Theme & { PaperTheme: CustomPaperThemeType } & { NavigationTheme: NavigationThemeType } & { darkMode: boolean } => {
     // Select the right theme light theme ({} if not exist)
     const { Variables: themeConfigVars = {} as Partial<ThemeVariables>, ...themeConfig } = themes[currentTheme] || {}
 
@@ -90,6 +91,7 @@ const useBuildTheme = () => {
       FontSize: themeVariables.ScaledFontSize[fontScale],
       darkMode: !!darkMode,
       Param: themeVariables.Param,
+      PaperTheme: PaperDefaultTheme as CustomPaperThemeType,
       NavigationTheme: defaultNavTheme,
     }
 
@@ -117,6 +119,7 @@ const formatTheme = (
       ...acc,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       [name]: (generate)(variables),
     }
   }, {})
@@ -139,6 +142,7 @@ const mergeVariables = (
   Object.entries(variables).reduce((acc, [group, vars]) => {
     return {
       ...acc,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       [group]: {
         ...vars,
         ...((themeConfig as any)[group] || {}),
@@ -161,16 +165,33 @@ const buildTheme = (
   baseTheme: Theme,
   themeConfig: Partial<Theme>,
   darkThemeConfig: Partial<Theme>,
-) => {
+): Theme & { PaperTheme: CustomPaperThemeType } & { NavigationTheme: NavigationThemeType } & { darkMode: boolean } => {
+
+  const paperTheme = mergeNavigationTheme(
+    darkMode ? PaperDarkTheme : PaperDefaultTheme,
+    baseTheme.Colors,
+    baseTheme.Fonts as any,
+    baseTheme.Param.roundness,
+  )
+
+  const adaptedNavigationTheme = adaptNavigationTheme({
+    materialLight: paperTheme,
+    reactNavigationLight: NavigationDefaultTheme,
+    materialDark: paperTheme,
+    reactNavigationDark: NavigationDarkTheme,
+  })
+
   return {
     ...mergeTheme(baseTheme, themeConfig, darkThemeConfig),
     darkMode,
-    NavigationTheme: mergeNavigationTheme(
-      darkMode ? Object.assign(NavigationDarkTheme, PaperDarkTheme) : Object.assign(NavigationDefaultTheme, PaperDefaultTheme),
-      baseTheme.Colors,
-      baseTheme.Fonts as any,
-      baseTheme.Param.roundness,
-    ),
+    PaperTheme: paperTheme,
+    NavigationTheme: darkMode ? adaptedNavigationTheme.DarkTheme : adaptedNavigationTheme.LightTheme,
+    // NavigationTheme: mergeNavigationTheme(
+    //   darkMode ? Object.assign(NavigationDarkTheme, PaperDarkTheme) : Object.assign(NavigationDefaultTheme, PaperDefaultTheme),
+    //   baseTheme.Colors,
+    //   baseTheme.Fonts as any,
+    //   baseTheme.Param.roundness,
+    // ),
   }
 }
 
@@ -191,6 +212,7 @@ const mergeTheme = (
   Object.entries(baseTheme).reduce(
     (acc, [key, value]) => ({
       ...acc,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       [key]: {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

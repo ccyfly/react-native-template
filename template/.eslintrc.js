@@ -273,7 +273,7 @@ module.exports = {
         next: 'return',
       },
     ],
-    'prefer-arrow/prefer-arrow-functions': 'error',
+    // 'prefer-arrow/prefer-arrow-functions': 'error',
     'prefer-template': 'off',
     'quote-props': ['error', 'as-needed'],
     radix: 'error',
@@ -374,6 +374,7 @@ module.exports = {
     'use-isnan': 'error',
     'valid-typeof': 'off',
     'no-async-promise-executor': 'off',
+    'space-infix-ops': 'off',
   },
   overrides: [
     {

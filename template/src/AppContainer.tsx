@@ -20,7 +20,7 @@ import { selectLocale } from '@/redux/selectors/setting'
 const AppContainer = (): React.ReactElement => {
   const dispatch = useDispatch()
   const theme = useBuildTheme()
-  const { Colors, MetricsSizes, NavigationTheme } = theme
+  const { Colors, MetricsSizes, NavigationTheme, PaperTheme } = theme
   const initiated = useSelector(selectInitiated)
   const lang = useSelector(selectLocale)
   const appState = useAppState({})
@@ -30,9 +30,9 @@ const AppContainer = (): React.ReactElement => {
   }, [appState])
 
   const emotionTheme: EmotionTheme = {
-    colors: NavigationTheme.colors,
+    colors: PaperTheme.colors,
     size: MetricsSizes,
-    roundness: NavigationTheme.roundness,
+    roundness: PaperTheme.roundness,
     param: theme.Param,
   }
 
@@ -94,7 +94,7 @@ const AppContainer = (): React.ReactElement => {
   return (
     <ThemeContext.Provider value={theme}>
       <EmotionThemeProvider theme={emotionTheme}>
-        <PaperProvider theme={NavigationTheme}>
+        <PaperProvider theme={PaperTheme}>
           <RootSiblingParent>
             {initiated ? <AppNavigationContainer theme={NavigationTheme} /> : <></>}
             <LoadingOverlay indicatorColor={Colors.primary} />

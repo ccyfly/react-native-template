@@ -12,10 +12,10 @@ export class MMKVStorage implements IStorage {
   }
 
   setItem = async (key: string, value: string) => {
-    return new Promise<boolean>(() => {
+    return new Promise<boolean>((resolve) => {
       storage.set(key, value)
 
-      return Promise.resolve(true)
+      return resolve(true)
     })
   }
 

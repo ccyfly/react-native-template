@@ -1,8 +1,8 @@
-import color from 'color'
+import color from 'tinycolor2'
 
 const hex2RGB = (hex: string): number[] => {
   if (hex.charAt(0) === '#') {
-    hex = hex.substr(1)
+    hex = hex.substring(1)
   }
   if ((hex.length < 2) || (hex.length > 6)) {
     return []
@@ -69,7 +69,7 @@ const rgbToHex = (rgb: string, forceRemoveAlpha = false) => {
   const alpha = parseFloat(rgbArray[3])
 
   return {
-    hex: color({ r, g, b }).hex(),
+    hex: color({ r, g, b }).toHex(),
     alpha,
   }
 }

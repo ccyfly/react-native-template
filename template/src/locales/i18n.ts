@@ -16,7 +16,7 @@ import en_US from './en-US/index'
 // import zh_CN from './zh-CN/index'
 import zh_TW from './zh-TW/index'
 
-const i18nOptions = {
+const i18nOptions: Record<any, any> = {
   compatibilityJSON: 'v4',
   lng: 'zh_TW',
   fallbackLng: 'zh_TW',
@@ -69,7 +69,7 @@ const languageDetector: LanguageDetectorAsyncModule = {
   },
   detect: (callback: (lng: string) => void) => {
     void AsyncStorage.getItem(StorageKey.appLang)
-      .then((value: string|null) => {
+      .then((value: string | null) => {
         if (value === undefined || value === null) {
           const preferredLocale = RNLocalize.getLocales()[0]
           const deviceLocale = preferredLocale.languageTag

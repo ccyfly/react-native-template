@@ -1,6 +1,5 @@
 import { PlatformPressable } from '@react-navigation/elements'
 import { Link, useTheme } from '@react-navigation/native'
-import Color from 'color'
 import * as React from 'react'
 import {
   Platform,
@@ -11,6 +10,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native'
+import Color from 'tinycolor2'
 
 type Props = {
   /**
@@ -90,11 +90,13 @@ type Props = {
    * ID to locate this drawer item in tests.
    */
   testID?: string
+  linkParams?: Record<string, any>
 }
 
 const LinkPressable = ({
   accessibilityRole,
   children,
+  linkParams,
   onLongPress,
   onPress,
   onPressIn,
@@ -102,12 +104,13 @@ const LinkPressable = ({
   style,
   to,
   ...rest
-}: Omit<React.ComponentProps<typeof PlatformPressable>, 'style'> & {
+}: Omit<React.ComponentProps<typeof PlatformPressable>, 'style' | 'pressRetentionOffset'> & {
   style: StyleProp<ViewStyle>
 } & {
   to?: string
   children: React.ReactNode
   onPress?: () => void
+  linkParams?: Record<string, any>
 }) => {
   if (Platform.OS === 'web' && to) {
     // React Native Web doesn't forward `onClick` if we use `TouchableWithoutFeedback`.
@@ -115,7 +118,8 @@ const LinkPressable = ({
     return (
       <Link
         {...rest}
-        to={to}
+        screen={to}
+        params={linkParams ?? {}}
         disabled={false}
         style={[styles.button, style]}
         onPress={(e: any) => {
@@ -163,12 +167,10 @@ const DrawerItem = (props: Props) => {
     focused = false,
     allowFontScaling,
     activeTintColor = colors.primary,
-    inactiveTintColor = Color(colors.text).alpha(0.68)
-      .rgb()
-      .string(),
-    activeBackgroundColor = Color(activeTintColor).alpha(0.12)
-      .rgb()
-      .string(),
+    inactiveTintColor = Color(colors.text).setAlpha(0.68)
+      .toPercentageRgbString(),
+    activeBackgroundColor = Color(activeTintColor).setAlpha(0.12)
+      .toPercentageRgbString(),
     inactiveBackgroundColor = 'transparent',
     style,
     onPress,

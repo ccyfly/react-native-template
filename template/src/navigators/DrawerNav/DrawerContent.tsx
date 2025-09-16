@@ -45,12 +45,12 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
       >
         {/* <Icon size={40} source={images.menu_settings} /> */}
         <PressableOpacity onPress={closeDrawer}>
-          <IconX size={40} color={Colors.text} origin={IconX.ANT_ICON} name="close" />
+          <IconX size={40} color={Colors.text} origin={IconX.ANT_DESIGN} name="close" />
         </PressableOpacity>
       </View>
       <DrawerItem
         label={({ color, focused }) => <Text style={[{ color }]}>{`${t('screens:home')}`}</Text>}
-        icon={({ color, focused, size }) => <IconX size={40} color={color} origin={IconX.ANT_ICON} name={'home'}/> }
+        icon={({ color, focused, size }) => <IconX size={40} color={color} origin={IconX.ANT_DESIGN} name={'home'} />}
         // labelStyle={[Fonts.drawerItem, { color: currentRouteName === AppRoutes.DrawerMain ? Colors.primary : Colors.text }]}
         focused={currentRouteName === `${AppRoutes.MainBottomTabNav}`}
         activeTintColor={Colors.primary}

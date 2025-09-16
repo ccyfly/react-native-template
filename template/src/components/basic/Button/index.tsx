@@ -1,4 +1,3 @@
-import color from 'color'
 import React, { useCallback } from 'react'
 import { StyleProp, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native'
 import {
@@ -10,28 +9,29 @@ import {
   TouchableRipple,
 } from 'react-native-paper'
 import { IconSource } from 'react-native-paper/src/components/Icon'
+import color from 'tinycolor2'
 
 import useTheme from '@/hooks/useTheme'
 import logger from '@/infrastructures/common/logger'
 
 import { getButtonColor } from './utils'
 
-export type ButtonType = 'text'|'round'|'outline'|'contain'|'icon'
+export type ButtonType = 'text' | 'round' | 'outline' | 'contain' | 'icon'
 
 export interface IButtonProps {
-  onPress?: () => void|Promise<void>
+  onPress?: () => void | Promise<void>
   // isRound?: boolean
   type?: ButtonType
   text?: string
-  buttonSize?: 'small'|'medium'|'large'
+  buttonSize?: 'small' | 'medium' | 'large'
   isPrimary?: boolean
   buttonColor?: string
   textColor?: string
   borderColor?: string
-  style?: ViewStyle|ViewStyle[]
-  contentStyle?: ViewStyle|ViewStyle[]
-  textStyle?: TextStyle|TextStyle[]
-  icon?: IconSource|React.ReactElement // React.ReactElement|string
+  style?: ViewStyle | ViewStyle[]
+  contentStyle?: ViewStyle | ViewStyle[]
+  textStyle?: TextStyle | TextStyle[]
+  icon?: IconSource | React.ReactElement // React.ReactElement|string
   iconSize?: number
   disabled?: boolean
   textColorOnTextOnly?: boolean
@@ -45,7 +45,7 @@ const Button: React.FC<IButtonProps> = ({
   icon,
   iconSize,
   isPrimary = true,
-  onPress = () => {},
+  onPress = () => { },
   style,
   text,
   textColor: customTextColor,
@@ -120,9 +120,8 @@ const Button: React.FC<IButtonProps> = ({
   }, [tempDisable])
 
   if (type === 'icon' && icon !== undefined) {
-    const rippleColor = color(textColor).alpha(0.12)
-      .rgb()
-      .string()
+    const rippleColor = color(textColor).setAlpha(0.12)
+      .toPercentageRgbString()
 
     /* return (
       <TouchableRipple
@@ -152,7 +151,7 @@ const Button: React.FC<IButtonProps> = ({
         style={[{ borderRadius: 12, margin: 0 }, style]}
         size={iconSize || 24}
         containerColor={backgroundColor}
-        icon={React.isValidElement(icon) ? (props) => icon : (icon as IconSource)}
+        icon={React.isValidElement(icon) ? (props) => icon : (icon)}
         iconColor={textColor}
       />
     )
