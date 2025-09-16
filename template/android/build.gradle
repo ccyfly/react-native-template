@@ -1,3 +1,6 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+import groovy.json.JsonSlurper
+
 buildscript {
     ext {
         buildToolsVersion = "36.0.0"
@@ -6,6 +9,7 @@ buildscript {
         targetSdkVersion = 36
         ndkVersion = "27.1.12297006"
         kotlinVersion = "2.1.20"
+//        kotlinVersion = "1.9.24"
     }
     repositories {
         google()
@@ -16,6 +20,18 @@ buildscript {
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
     }
+}
+
+def getNpmVersionName() {
+    def inputFile = new File("../package.json")
+    def packageJson = new JsonSlurper().parseText(inputFile.text)
+    return packageJson["version"]
+}
+
+def getNpmVersionBuild() {
+  def inputFile = new File("../package.json")
+  def packageJson = new JsonSlurper().parseText(inputFile.text)
+  return packageJson["build"].toInteger()
 }
 
 apply plugin: "com.facebook.react.rootproject"
