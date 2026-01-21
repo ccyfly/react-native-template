@@ -8,7 +8,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { PressableOpacity, Text as BText } from '@/components/basic'
 import useTheme from '@/hooks/useTheme'
@@ -31,9 +30,9 @@ type Props<ItemT> = {
   options: IOption<ItemT>[]
   radius?: number
 }
-const ButtonGroup = <T, >({
+const ButtonGroup = <T,>({
   backgroundColor,
-  onSelect = () => {},
+  onSelect = () => { },
   options,
   radius,
   style = {},
@@ -41,7 +40,7 @@ const ButtonGroup = <T, >({
 }: Props<T>) => {
 
   const { Colors, Fonts, Gutters, Param } = useTheme()
-  const styles = makeStyles({ Gutters, Param, radius })
+  const styles = makeStyles({ Colors, Gutters, Param, radius, backgroundColor })
   const itemStyle = {
     borderColor: Colors.primary,
     backgroundColor: backgroundColor ?? Colors.background,
@@ -72,43 +71,32 @@ const ButtonGroup = <T, >({
         style,
       ]}
     >
-      <View
-        style={[
-          {
-            flexDirection: 'row',
-            display: 'flex',
-            width: '100%',
-          },
-          style,
-        ]}
-      >
-        {options.map((option, index) => {
-          const onPressIndex = () => {
-            onPress(option.value)
-          }
+      {options.map((option, index) => {
+        const onPressIndex = () => {
+          onPress(option.value)
+        }
 
-          return (
-            <View
-              key={`option_${index}`}
+        return (
+          <View
+            key={`option_${index}`}
+            style={{ flex: 1 }}
+          >
+            <PressableOpacity
+              activeOpacity={0.6}
+              onPress={onPressIndex}
               style={{ flex: 1 }}
             >
-              <PressableOpacity
-                activeOpacity={0.6}
-                onPress={onPressIndex}
-                style={{ flex: 1 }}
+              <View
+                style={StyleSheet.flatten([
+                  styles.item,
+                  index === 0 ? styles.firstItem :
+                    index === options.length - 1 ?
+                      styles.lastItem :
+                      {},
+                  option.value === value ? selectedItemStyle : {},
+                ])}
               >
-                <View
-                  style={[
-                    index === 0 ? styles.firstItem :
-                      index === options.length -1 ?
-                        styles.lastItem :
-                        styles.item,
-                    itemStyle,
-                    option.value === value ? selectedItemStyle : {},
-                    { flex: 1 },
-                  ]}
-                >
-                  {/* {typeof option === 'string' ? (
+                {/* {typeof option === 'string' ? (
                   <Text
                     style={[
                       textStyle,
@@ -116,41 +104,52 @@ const ButtonGroup = <T, >({
                     ]}
                   >{option}</Text>
                 ) : option} */}
-                  <Text
-                    style={[
-                      textStyle,
-                      option.value === value ? selectedTextStyle : { padding: 0, margin: 0 },
-                    ]}
-                  >{option.label}</Text>
-                </View>
-              </PressableOpacity>
-            </View>
-          )
-        })}
-      </View>
+                <Text
+                  style={[
+                    textStyle,
+                    option.value === value ? selectedTextStyle : { padding: 0, margin: 0 },
+                  ]}
+                >{option.label}</Text>
+              </View>
+            </PressableOpacity>
+          </View>
+        )
+      })}
     </View>
   )
 }
-const makeStyles = ({ Gutters, Param, radius }: Pick<Theme, 'Gutters'|'Param'> & { radius?: number }) => {
+const makeStyles = ({ Colors, Gutters, Param, radius, backgroundColor }: Pick<Theme, 'Colors' | 'Gutters' | 'Param'> & { radius?: number; backgroundColor?: string }) => {
   return StyleSheet.create({
     firstItem: {
       borderBottomLeftRadius: radius ?? Param.roundness * 2,
       borderTopLeftRadius: radius ?? Param.roundness * 2,
-      borderWidth: 1,
+      borderLeftWidth: 1,
       borderRightWidth: 0,
-      ...Gutters.tinyPadding,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
     },
     lastItem: {
       borderBottomRightRadius: radius ?? Param.roundness * 2,
       borderTopRightRadius: radius ?? Param.roundness * 2,
-      borderWidth: 1,
-      borderLeftWidth: 0,
-      ...Gutters.tinyPadding,
-    },
-    item: {
-      borderWidth: 1,
       borderLeftWidth: 1,
       borderRightWidth: 1,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+    },
+    item: {
+      borderColor: Colors.primary,
+      backgroundColor: backgroundColor ?? Colors.background,
+      // flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+      borderLeftWidth: 1,
+      borderRightWidth: 0,
+      // minWidth: 50,
+      height: 40,
+      flex: 1,
+      overflow: 'hidden',
       ...Gutters.tinyPadding,
     },
     selectedStyle: {},

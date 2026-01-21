@@ -95,13 +95,13 @@ class BaseDialogBK extends Component<DialogProps, State> {
 
   isSwipingOut: boolean
   lastSwipeEvent: DragEvent | undefined
-  backdrop: React.RefObject<Backdrop>
+  backdrop: React.RefObject<Backdrop | null>
   constructor(props: DialogProps) {
     super(props)
 
     this.isSwipingOut = false
     this.lastSwipeEvent = undefined
-    this.backdrop = React.createRef<Backdrop>()
+    this.backdrop = React.createRef<Backdrop | null>()
     this.state = {
       modalAnimation: props.modalAnimation || new FadeAnimation({ animationDuration: props.animationDuration }),
       modalState: MODAL_CLOSED,
@@ -305,7 +305,7 @@ export type Handle = {
 }
 const BaseDialogBase = (
   {
-    animationDuration= DEFAULT_ANIMATION_DURATION,
+    animationDuration = DEFAULT_ANIMATION_DURATION,
     children,
     footer,
     hasOverlay = true,
@@ -329,8 +329,8 @@ const BaseDialogBase = (
     style = null,
     swipeDirection,
     swipeThreshold,
-    useNativeDriver= true,
-    visible= false,
+    useNativeDriver = true,
+    visible = false,
     width,
   }: DialogProps, ref: React.Ref<Handle>) => {
   const [modalState, setModalState] = useState(MODAL_CLOSED)
@@ -339,7 +339,7 @@ const BaseDialogBase = (
   const lastSwipeEvent = React.useRef<DragEvent | null>(null)
   const [modalAnimation, setModalAnimation] = useState(_modalAnimation || new FadeAnimation({ animationDuration }))
 
-  const dismissCB = React.useRef<() => void>()
+  const dismissCB = React.useRef<(() => void) | undefined>(() => { })
 
   useImperativeHandle(ref, () => ({
     dismiss: (cb?: () => void) => {

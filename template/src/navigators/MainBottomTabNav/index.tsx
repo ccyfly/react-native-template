@@ -22,7 +22,7 @@ const MainBottomTabNav = () => {
 
   const renderTabIcon = useCallback((iconName: string) => {
     const renderNamedTabIcon = ({ color, focused }: { color?: string; focused: boolean }) => {
-      return <IconX origin={IconX.ANT_DESIGN} name={iconName} size={30} color={color} />
+      return <IconX origin={IconX.ANT_DESIGN} name={iconName} size={26} color={color} />
     }
 
     return renderNamedTabIcon

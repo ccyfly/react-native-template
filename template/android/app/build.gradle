@@ -82,11 +82,28 @@ def enableProguardInReleaseBuilds = false
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
 android {
+    ext.setBuildInfo = {
+        if (versionPropsFile.canRead()) {
+            Properties versionProps = new Properties()
+            versionProps.load(new FileInputStream(versionPropsFile))
+            versionProps['VERSION_NAME'] = _versionName
+            versionProps['VERSION_CODE'] = _versionCode.toString()
+            versionProps.store(versionPropsFile.newWriter(), null)
+        } else {
+            // throw new FileNotFoundException("Could not read version.properties!")
+        }
+    }
     ext.getArtifactName = {
         defaultConfig ->
             def date = new Date().format("yyyyMMdd")
             return defaultConfig.applicationId + "-v" + defaultConfig.versionName + "(" + defaultConfig.versionCode + ")_" + date
-   }
+    }
+
+    gradle.taskGraph.whenReady {taskGraph ->
+        if (taskGraph.hasTask(assembleRelease) || taskGraph.hasTask(bundleRelease)) {
+            setBuildInfo()
+        }
+    }
 
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion

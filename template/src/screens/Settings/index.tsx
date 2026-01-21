@@ -40,6 +40,20 @@ const SettingsScreen = () => {
         <ScrollView overScrollMode={'never'}>
           <View>
             <Item>
+              <View style={[Layout.row, Layout.fill]} >
+                <View
+                  style={[Layout.justifyContentCenter]}
+                >
+                  <Text variant={'settingText'}>{t('general:version')}</Text>
+                </View>
+                <View
+                  style={[Layout.fill, Layout.justifyContentCenter, Layout.alignItemsEnd]}
+                >
+                  <Text variant={'settingText'}>{t('general:version_stringb', { version_name: version ?? '', build: buildNumber ?? '' })}</Text>
+                </View>
+              </View>
+            </Item>
+            <Item>
               <View
                 style={[Layout.row, Layout.fill]}
               >

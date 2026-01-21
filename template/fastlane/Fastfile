@@ -11,15 +11,14 @@ private_lane :inc_build do
   )
 
   increment_build_number_in_xcodeproj(
-    # xcodeproj: './ios/' + package['name'] + '.xcodeproj',
-    xcodeproj: './ios/ProjectName.xcodeproj',
+    xcodeproj: './ios/' + package['name'] + '.xcodeproj',
     build_number: package['build']
   )
 end
 
 desc 'Increment package.json version, and set it to android and ios.'
 private_lane :inc_ver do
-  sh "npm version patch --no-git-tag-version" 
+  inc_package_ver
 
   package = load_json(json_path: "./package.json")
   version = package['version']
@@ -30,8 +29,7 @@ private_lane :inc_ver do
   )
 
   increment_version_number_in_xcodeproj(
-    # xcodeproj: './ios/' + package['name'] + '.xcodeproj',
-    xcodeproj: './ios/ProjectName.xcodeproj',
+    xcodeproj: './ios/' + package['name'] + '.xcodeproj',
     version_number: version
   )
 end
@@ -43,51 +41,77 @@ private_lane :inc_package_build do
   sh "npm pkg set build=#{build}"
 end
 
-desc 'Android: Increment build number'
-private_lane :inc_and_build do
-  package = load_json(json_path: "./package.json")
-
-  set_properties_value(
-    key: "VERSION_CODE",
-    value: package['build'],
-    path: "./android/version.properties"
-  )
-
-  # increment_version_code_in_properties_file(
-  #   key: "VERSION_CODE",
-  #   path: "./android/version.properties"
-  # )
-end
-
-desc 'iOS: Increment build number'
-private_lane :inc_ios_build do
-  increment_build_number_in_xcodeproj(
-    xcodeproj: './ios/ProjectName.xcodeproj'
-  )
-end
-
 desc 'Increment versionName to package.json version.'
 private_lane :inc_package_ver do
   sh "npm version patch --no-git-tag-version" 
 end
 
-desc 'Android: Increment version.'
-private_lane :inc_and_ver do
+desc 'Set package.json build to android and ios.'
+private_lane :set_package_build do
   package = load_json(json_path: "./package.json")
+  build_value = package['build']
   set_properties_value(
-    key: "VERSION_NAME",
-    value: package['version'],
+    key: "VERSION_CODE",
+    value: build_value,
     path: "./android/version.properties"
+  )
+
+  increment_build_number_in_xcodeproj(
+    xcodeproj: './ios/' + package['name'] + '.xcodeproj',
+    build_number: build_value
   )
 end
 
-desc 'iOS: Increment version'
-private_lane :inc_ios_ver do
+desc 'Set package.json version to android and ios.'
+private_lane :set_package_ver do
+  package = load_json(json_path: "./package.json")
+  version = package['version']
+  set_properties_value(
+    key: "VERSION_NAME",
+    value: version,
+    path: "./android/version.properties"
+  )
+
   increment_version_number_in_xcodeproj(
-    xcodeproj: './ios/ProjectName.xcodeproj',
-    bump_type: 'patch'
+    xcodeproj: './ios/' + package['name'] + '.xcodeproj',
+    version_number: version
   )
 end
+
+# desc 'Android: Increment build number'
+# private_lane :inc_and_build do
+#   increment_version_code_in_properties_file(
+#     key: "VERSION_CODE",
+#     path: "./android/version.properties"
+#   )
+# end
+
+# desc 'iOS: Increment build number'
+# private_lane :inc_ios_build do
+#   increment_build_number_in_xcodeproj(
+#     xcodeproj: './ios/' + package['name'] + '.xcodeproj',
+#   )
+# end
+
+# desc 'Android: Increment version.'
+# private_lane :inc_and_ver do
+#   package = load_json(json_path: "./package.json")
+#   set_properties_value(
+#     key: "VERSION_NAME",
+#     value: package['version'],
+#     path: "./android/version.properties"
+#   )
+# end
+
+# desc 'iOS: Increment version'
+# private_lane :inc_ios_ver do
+#   package = load_json(json_path: "./package.json")
+#   increment_version_number_in_xcodeproj(
+#     xcodeproj: './ios/' + package['name'] + '.xcodeproj',
+#     # version_number: package['version']
+#     bump_type: 'patch'
+#   )
+# end
 
 desc 'Bump version name, and set the version to match the pacakage.json version.'
 lane :bump_ver do
@@ -103,4 +127,10 @@ desc 'Bump version and build numbers'
 lane :bump do
   inc_ver
   inc_build
+end
+
+desc 'Set version and build from package.json'
+lane :set_ver do
+  set_package_ver
+  set_package_build
 end
