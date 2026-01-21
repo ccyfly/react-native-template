@@ -4,8 +4,8 @@
   "description": "React Native Template",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/ccyfly/react-native-template.git"
-  },
+    "url": "https://github.com/ccyfly/react-native-template"
+  }
   "author": "CalvinC <ccyfly@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/ccyfly/react-native-template#readme"
