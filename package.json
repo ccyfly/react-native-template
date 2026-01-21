@@ -5,7 +5,11 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ccyfly/react-native-template"
-  }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "author": "CalvinC <ccyfly@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/ccyfly/react-native-template#readme"
